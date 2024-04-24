@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Fernando Romo">
+        <title>FitFlow Pro</title>
+        <link rel="icon" href="Flogo.png" type="images/png" />
+  
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <header>
+          <h2 class="logo">
+            FitFlow Pro</h2>
+            <nav class="navigation">
+            <a href="#">Home</a>  
+            <a th:href="@{/services}">Services</a>  
+            <a href="#">Contact</a>
+            <button class="btnLogin-popup">Login</button>
+          </nav>
+        </header>
+
+
+        <div class=>
+          
+        <span class="icon-close">
+          <ion-icon name="close-outline"></ion-icon>
+        </span>
+
+          <div class="form-box login">
+            <h2>Login</h2>
+            <form action="home" method="post">
+              <div class="input-box">
+                <span class="icon">
+                  <ion-icon name="mail"></ion-icon>
+                </span>
+                  <input type="email" required>
+                  <label>Email</label>
+              </div>
+              <div class="input-box">
+                <span class="icon">
+                  <ion-icon name="lock-closed"></ion-icon>
+                </span>
+                  <input type="password" required>
+                  <label>Password</label>
+              </div>
+              <div class="remember-forgot">
+                <label><input type="checkbox"> Remember me </label>
+                <a href="#">Forgot Password?</a>
+              </div>
+              <button type="submit" class="btn">
+                Login
+              </button>
+              <div class="login-register">
+                <p>Don't have an account?<a href="#" class="register-link"> Register</a></p>
+
+              </div>
+            </form>
+          </div>
+
+      
+          <div class=>
+            <h2>Registration</h2>
+            <form action="home" method="post">
+              <div class="input-box">
+                <span class="icon">
+                  <ion-icon name="person"></ion-icon>                
+                </span>
+                  <input type="text" required name="username">
+                  <label for="username">Username</label>
+              </div>
+              <div class="input-box">
+                <span class="icon">
+                  <ion-icon name="mail"></ion-icon>
+                </span>
+                  <input type="email" required name="email">
+                  <label for="email">Email</label>
+              </div>
+              <div class="input-box">
+                <span class="icon">
+                  <ion-icon name="lock-closed"></ion-icon>
+                </span>
+                  <input type="password" required name="passwd">
+                  <label for="password">Password</label>
+              </div>
+              <div class="input-box">
+                <input type="number" id="height" name="height" required>
+                <label for="height">Height (in cm):</label>
+            </div>
+            <div>
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div>
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <input type="number" id="startWeight" name="startWeight" required>
+                <label for="startWeight">Starting Weight (in lbs):</label>
+            </div>
+            <div class="input-box">
+              <input type="number" id="currentWeight" name="currentWeight" required>
+              <label for="currentWeight">Current Weight (in lbs):</label>  
+            </div>
+            <div class="input-box">
+              <input type="number" id="goalWeight" name="goalWeight" required>
+              <label for="goalWeight">Goal Weight (in lbs):</label>   
+            </div>
+            <div class="input-box">
+                <input type="number" id="activityLevel" name="activityLevel" required>
+                <label for="activityLevel">Activity Level from 1-10 (10 being very active):</label> 
+            </div>
+              <div>
+                <!-- <label><input type="checkbox" required> I agree to the terms & conditions. </label>              </div> -->
+              <button type="submit" class="btn">
+                Register
+              </button>
+              <div class="login-register">
+                <p>Already have an account?
+                  <a href="#" class="login-link">
+                    Login
+                  </a>
+                </p>
+
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+      
+        <script type="text/javascript" src="myJSfile.js"></script> 
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Tracker</title>
+    <link rel="icon" href="Flogo.png" type="images/png" />
+  
+    <link rel="stylesheet" href="workouts.css" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h2 class="logo">
+          FitFlow Pro</h2>
+          <nav class="navigation">
+          <a th:href="@{/home}">Home</a>  
+          <a th:href="@{/services}">Services</a>  
+          <a href="#">Contact</a>
+          <button class="btnLogin-popup">Login</button>
+        </nav>
+      </header>
+
+
+    <h1>Calorie Tracker</h1>
+    <form id="calorieForm">
+        <label for="meal">Meal:</label>
+        <input type="text" id="meal" name="meal">
+        <label for="calories">Calories:</label>
+        <input type="number" id="calories" name="calories">
+        <button type="button" onclick="addMeal()">Add Meal</button>
+    </form>
+    <div id="mealList">
+        <h2>Meal List</h2>
+        <ul id="meals"></ul>
+    </div>
+    <div id="totalCalories">
+        <h2>Total Calories</h2>
+        <p id="total">0</p>
+    </div>
+
+    <script>
+        function addMeal() {
+            // Get meal and calories input values
+            var meal = document.getElementById("meal").value;
+            var calories = parseInt(document.getElementById("calories").value);
+
+            // Create list item to display meal
+            var li = document.createElement("li");
+            li.textContent = meal + " - " + calories + " calories";
+
+            // Append list item to meal list
+            document.getElementById("meals").appendChild(li);
+
+            // Update total calories
+            var totalElement = document.getElementById("total");
+            var currentTotal = parseInt(totalElement.textContent);
+            totalElement.textContent = currentTotal + calories;
+
+            // Clear input fields
+            document.getElementById("meal").value = "";
+            document.getElementById("calories").value = "";
+        }
+    </script>
+</body>
+</html>
