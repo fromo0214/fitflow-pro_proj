@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.html.demo.model.User;
 import com.example.html.demo.repository.UserRepository;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 public class HomeController {

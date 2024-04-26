@@ -94,6 +94,10 @@ header{
     color: var(--main-color);
 }
 
+h1{
+    margin-top: 80px;
+}
+
 .wrapper{
     position: relative;
     width: 400px;

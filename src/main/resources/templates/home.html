@@ -15,12 +15,16 @@
           <h2 class="logo">
             FitFlow Pro</h2>
             <nav class="navigation">
-            <a href="#">Home</a> 
+            <a th:href="@{/home}">Home</a> 
             <a th:href="@{/services}">Services</a>  
             <a href="#">Contact</a>
-            <button class="btnLogin-popup">Login</button>
+            <button  th:href="@{/index}" class="btnLogin-popup">Profile</button>
           </nav>
         </header>
+
+        <h1>Welcome </h1>
+        <h1 th:text="${username}"> username</h1>
+
 
 
         <div class="wrapper">
@@ -101,12 +105,8 @@
           </div>
         </div> -->
 
-        <div class=>
-            <h2>Welcome</h2>
-            <h2 th:text="${username}">username</h2>
-            <!-- <h1>User Profile Information</h1> -->
-        </div>
-
+        
+      
       
         <script type="text/javascript" src="myJSfile.js"></script> 
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

@@ -44,8 +44,8 @@ public class User {
     @Column(name = "goal_weight")
     private int goalWeight;
 
-    @Column(name = "activity_level")
-    private int activityLevel;
+    @Column(name = "experience_level")
+    private int experienceLevel;
 
     public int getUserId(){
         return userId;
@@ -105,17 +105,17 @@ public class User {
     public void setGoalWeight(int goalWeight) {
         this.goalWeight = goalWeight;
     }
-    public int getActivityLevel() {
-        return activityLevel;
+    public int getExperienceLevel() {
+        return experienceLevel;
     }
-    public void setActivityLevel(int activityLevel) {
-        this.activityLevel = activityLevel;
+    public void setExperienceLevel(int experienceLevel) {
+        this.experienceLevel = experienceLevel;
     }
     @Override
     public String toString() {
         return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", passwd=" + passwd
                 + ", height=" + height + ", gender=" + gender + ", dob=" + dob + ", startingWeight=" + startWeight
-                + ", currentWeight=" + currentWeight + ", goalWeight=" + goalWeight + ", activityLevel=" + activityLevel
+                + ", currentWeight=" + currentWeight + ", goalWeight=" + goalWeight + ", experienceLevel=" + experienceLevel
                 + "]";
     }
 
