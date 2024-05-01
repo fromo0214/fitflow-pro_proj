@@ -30,47 +30,31 @@ public class WorkoutController {
     @Autowired
     private WorkoutService workoutService;
 
-    @Autowired
-    private WorkoutRecommendationSystem recommendationSystem;
+    // private WorkoutRecommendationSystem recommendationSystem;
 
-    @PostMapping("/workouts")
-    public String postMethodName(@ModelAttribute User user, Model model) {
-        
-        user = userRepository.save(user); 
-        model.addAttribute("experienceLevel", user.getExperienceLevel());
-        return "workouts";
-    }
+    // @GetMapping("/workouts")
+    // public String showUserExperience(@ModelAttribute User user, Model model) {
+    //     int userId = user.getUserId();
+    //     user = userRepository.findById(userId).orElse(null);
+    //     if(user == null){
+    //         model.addAttribute("null", user.getExperienceLevel());
+    //     }
+    //     model.addAttribute("experienceLevel", user.getExperienceLevel());
+    //     return "workouts";
+    // }
     
 
 
     @GetMapping("/workouts")
-    public String showWorkouts(@PathVariable int userId, Model model){
-        User user = userRepository.findById(userId).orElse(null);
-        if(user == null){
-            return ("User not found");
-        }
-
-        int usrId = user.getUserId();
+    public String showWorkouts(@ModelAttribute User user, Model model){
+        
 
         List<Workout> workouts = workoutService.getAllWorkouts();
-        List<Workout> recommendedWorkout = getUserRecommended(usrId);
-        //this s groups the workouts in my list by their corresponding body part they focus on
         Map<String,List<Workout>> groupedWorkouts = groupWorkoutsByBodyParts(workouts);
 
-        model.addAttribute("recommendedWorkouts", recommendedWorkout);
+        // model.addAttribute("recommendedWorkouts", recommendedWorkout);
         model.addAttribute("groupedWorkouts", groupedWorkouts);
         return "workouts";
-    }
-
-    public List<Workout> getUserRecommended(@PathVariable int userId){
-        User user = userRepository.findById(userId).orElse(null);
-        if(user == null){
-            return Collections.emptyList();
-        }
-
-        int experienceLevel = user.getExperienceLevel();
-
-        return recommendationSystem.recommendWorkouts(experienceLevel);
     }
 
     //method to group the workouts by body part focus

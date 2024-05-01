@@ -21,7 +21,7 @@
       </header>
 
     <h1>Suggested Workouts based on your experience level</h1>
-    <h1 th:text="${experienceLevel}">experienceLevel</h1>
+    <!-- <h1 th:text="${experienceLevel}">experienceLevel</h1>
     <div th:each="entry : ${groupedWorkouts}">
         <h2 th:text="${entry.key}"></h2>
         <table>
@@ -32,16 +32,16 @@
                     <th>Difficulty Rating</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody> -->
                 <!-- Iterate over workouts under each body part -->
-                <tr th:each="workout : ${entry.value}">
+                <!-- <tr th:each="workout : ${entry.value}">
                     <td th:text="${workout.workoutName}"></td>
                     <td th:text="${workout.workoutDesc}"></td>
                     <td th:text="${workout.difficultyRating}"></td>
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
 
     <h1>All Workouts</h1>
     <div th:each="entry : ${groupedWorkouts}">
