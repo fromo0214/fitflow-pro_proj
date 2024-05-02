@@ -1,10 +1,14 @@
 package com.example.html.demo.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -45,7 +49,21 @@ public class User {
     private int goalWeight;
 
     @Column(name = "experience_level")
-    private int experienceLevel;
+    private Double experienceLevel;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SuggestedWorkouts> suggestedWorkouts;
+
+    User(){
+
+    }
+
+    public User(String username, String email, String passwd, double experienceLevel) {
+        this.username = username;
+        this.email = email;
+        this.passwd = passwd;
+        this.experienceLevel = experienceLevel;
+    }
 
     public int getUserId(){
         return userId;
@@ -105,10 +123,10 @@ public class User {
     public void setGoalWeight(int goalWeight) {
         this.goalWeight = goalWeight;
     }
-    public int getExperienceLevel() {
+    public Double getExperienceLevel() {
         return experienceLevel;
     }
-    public void setExperienceLevel(int experienceLevel) {
+    public void setExperienceLevel(Double experienceLevel) {
         this.experienceLevel = experienceLevel;
     }
     @Override

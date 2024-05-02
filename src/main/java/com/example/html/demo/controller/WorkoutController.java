@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.html.demo.model.LinearRegressionModel;
 import com.example.html.demo.model.User;
 import com.example.html.demo.model.Workout;
 import com.example.html.demo.model.WorkoutRecommendationSystem;
@@ -44,7 +46,6 @@ public class WorkoutController {
     // }
     
 
-
     @GetMapping("/workouts")
     public String showWorkouts(@ModelAttribute User user, Model model){
         
@@ -57,8 +58,8 @@ public class WorkoutController {
         return "workouts";
     }
 
-    //method to group the workouts by body part focus
-    private Map<String, List<Workout>> groupWorkoutsByBodyParts(List<Workout> workouts) {
+      //method to group the workouts by body part focus
+      private Map<String, List<Workout>> groupWorkoutsByBodyParts(List<Workout> workouts) {
         // TODO Auto-generated method stub
         Map<String,List<Workout>> groupedWorkouts = new HashMap<>();
 
@@ -74,4 +75,7 @@ public class WorkoutController {
         }
         return groupedWorkouts;
     }
+
 }
+
+  

@@ -17,7 +17,6 @@
           <nav class="navigation">
           <a th:href="@{/home}">Home</a>  
           <a th:href="@{/services}">Services</a>  
-          <a href="#">Contact</a>
           <button class="btnLogin-popup">Login</button>
         </nav>
       </header>
@@ -25,8 +24,9 @@
     <h1>Welcome to the Service Page</h1>
     <h2>Features:</h2>
     <ul>
-        <li><a th:href="@{/workouts}">Suggested Workouts For You!</a></li>
-        <li><a th:href="@{/calorie_tracker}">Calorie Tracking</a></li>
+        <li><a th:href="@{/workouts}">All workouts!</a></li>
+        <li><a th:href="@{/suggested_workouts(userId=${userId})}">Suggested Workouts</a></li>
+        <li><a th:href="@{/calorie_tracker}">Calorie Tracking!</a></li>
     </ul>
 </body>
 </html>

@@ -1,9 +1,14 @@
 package com.example.html.demo.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "workout")
@@ -24,7 +29,10 @@ public class Workout {
 
     //difficulty scale from 1-10 10 being the hardest
     @Column(name = "difficulty_rating")
-    private int difficultyRating;
+    private double difficultyRating;
+
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL)
+    private List<SuggestedWorkouts> suggestedWorkouts;
 
     public Workout(){
         
@@ -70,7 +78,7 @@ public class Workout {
         this.bodyPartFocus = bodyPartFocus;
     }
 
-    public int getDifficultyRating() {
+    public double getDifficultyRating() {
         return difficultyRating;
     }
 
