@@ -137,8 +137,5 @@ public class User {
                 + ", currentWeight=" + currentWeight + ", goalWeight=" + goalWeight + ", experienceLevel=" + experienceLevel
                 + "]";
     }
-
-
-
     
 }

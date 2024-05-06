@@ -41,4 +41,8 @@ public class WorkoutRoutineService {
          routine3.setWorkouts(workouts.subList(10, 15)); // Add next 5 workouts
          workoutRoutineRepository.save(routine3);
     }
+
+    public List<WorkoutRoutine> getAllRoutines(){
+        return (List<WorkoutRoutine>) workoutRoutineRepository.findAll();
+    }
 }

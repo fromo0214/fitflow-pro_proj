@@ -13,7 +13,7 @@ public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long ratingId;
 
     @ManyToOne
     private User user;
@@ -23,12 +23,12 @@ public class Rating {
 
     private double rating;
 
-    public int getId() {
-        return id;
+    public Long getId() {
+        return ratingId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Long ratingId) {
+        this.ratingId = ratingId;
     }
 
     public User getUser() {

@@ -24,9 +24,9 @@ public class CollaborativeFilteringModel {
     }
     
     // Step 2: Generate recommendations
-    public List<Workout> generateRecommendations(double[][] userItemMatrix, double[][] similarityMatrix, int targetUser, List<Workout> allWorkouts, double threshold) {
+    public List<WorkoutRoutine> generateRecommendations(double[][] userItemMatrix, double[][] similarityMatrix, int targetUser, List<WorkoutRoutine> allRoutines, double threshold) {
         int numItems = userItemMatrix[0].length;
-        List<Workout> recommendations = new ArrayList<>();
+        List<WorkoutRoutine> recommendations = new ArrayList<>();
 
         for (int item = 0; item < numItems; item++) {
             if (userItemMatrix[targetUser][item] == 0) {
@@ -46,7 +46,7 @@ public class CollaborativeFilteringModel {
                     double predictedRating = weightedRatingSum / similaritySum;
                     // Add the workout to recommendations if predicted rating is above a threshold
                     if (predictedRating >= threshold) {
-                        recommendations.add(allWorkouts.get(item));
+                        recommendations.add(allRoutines.get(item));
                     }
                 }
             }
