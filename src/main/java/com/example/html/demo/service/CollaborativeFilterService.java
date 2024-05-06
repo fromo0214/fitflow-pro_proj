@@ -1,9 +1,15 @@
 // package com.example.html.demo.service;
 
+// import com.example.html.demo.generator.UseritemMatrixGenerator;
+// import com.example.html.demo.model.User;
 // import com.example.html.demo.model.Workout;
+// import com.example.html.demo.model.WorkoutRoutine;
+
 // import java.util.List;
 
 // public class CollaborativeFilterService {
+
+//     private UseritemMatrixGenerator useritemMatrixGenerator;
 
 //     // Collaborative filtering logic to generate recommendations
 //     public List<Workout> generateRecommendations(int userId) {
@@ -18,11 +24,8 @@
 //     }
 
 //     // Method to retrieve user-item matrix from data source
-//     private double[][] getUserItemMatrixFromDataSource() {
-//         // Implement logic to fetch user-item matrix from your data source (e.g., database)
-//         // Example:
-//         // double[][] userItemMatrix = ...;
-//         return userItemMatrix;
+//     private double[][] getUserItemMatrixFromDataSource(List<User> users, List<WorkoutRoutine> routines) {
+//         return useritemMatrixGenerator.generateUserItemMatrix(users, routines);
 //     }
 
 //     // Method to retrieve similarity matrix from data source

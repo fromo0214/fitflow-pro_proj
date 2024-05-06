@@ -19,6 +19,9 @@ public class WorkoutRoutine {
     @Column(name = "routine_name")
     private String name;
 
+    @Column(name = "routine_difficulty")
+    private double routineDifficulty;
+
     @OneToMany
     private List<Workout> workouts;
 
@@ -59,6 +62,12 @@ public class WorkoutRoutine {
         this.routineId = routineId;
     }
 
-    
+    public double getRoutineDifficulty() {
+        return routineDifficulty;
+    }
+
+    public void setRoutineDifficulty(double routineDifficulty) {
+        this.routineDifficulty = routineDifficulty;
+    }
     
 }

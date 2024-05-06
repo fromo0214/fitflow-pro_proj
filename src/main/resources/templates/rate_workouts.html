@@ -19,30 +19,35 @@
         </nav>
       </header>
 
-      <h1>Rate Workouts!</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Exercise</th>
-                    <th>Difficulty Rating</th>
-                    <th>User Rating (1-5)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="entry : ${groupedWorkouts}">
-                    <td th:text="${entry.value[0].workoutName}"></td>
-                    <td th:text="${entry.value[0].difficultyRating}"></td>
-                    <td>
-                        <form method="post" action="/suggested_workouts">
-                            <input type="number" name="rating" min="1" max="5" step="0.1">
-                            <input type="hidden" name="userId" value="23">
-                            <input type="hidden" name="workoutId" th:value="${entry.value[0].workoutId}">
-                    </td>
-                </tr>
-                
-            </tbody>
-        </table>
-        <button type="submit">Submit Ratings</button>
-    </form>
+      <h1>Rate Workout Routines!</h1>
+      <form method="post" action="/suggested_workouts">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Routine Name</th>
+                      <th>Workouts</th>
+                      <th>Difficulty Rating</th>
+                      <th>User Rating (1-5)</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="routine : ${routines}">
+                      <td th:text="${routine.name}"></td>
+                      <td>
+                          <ul>
+                              <li th:each="workout : ${routine.workouts}" th:text="${workout.workoutName}"></li>
+                          </ul>
+                      </td>
+                      <td th:text =${routine.routineDifficulty}></td>
+                      <td>
+                          <input type="number" name="rating" min="1" max="5" step="0.1">
+                          <input type="hidden" name="userId" value="23">
+                          <input type="hidden" name="routineId" th:value="${routine.routineId}">
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <button type="submit">Submit Ratings</button>
+      </form>
 </body>
 </html>
