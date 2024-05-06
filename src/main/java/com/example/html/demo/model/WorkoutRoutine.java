@@ -20,7 +20,7 @@ public class WorkoutRoutine {
     @Column(name = "routine_name")
     private String name;
 
-    @OneToMany(mappedBy = "workoutRoutine", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Workout> workouts;
 
     
