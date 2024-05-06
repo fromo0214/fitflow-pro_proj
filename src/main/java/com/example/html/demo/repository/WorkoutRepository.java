@@ -10,7 +10,7 @@ import com.example.html.demo.model.Workout;
 
 
 @Repository
-public interface WorkoutRepository extends CrudRepository<Workout, Integer>{
+public interface WorkoutRepository extends CrudRepository<Workout, Long>{
     Workout findByDifficultyRating(double difficultyRating);
 
     @Query("SELECT w.difficultyRating FROM Workout w")

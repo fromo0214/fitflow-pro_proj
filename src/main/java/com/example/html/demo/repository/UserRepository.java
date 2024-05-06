@@ -10,11 +10,11 @@ import com.example.html.demo.model.User;
 
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer>{
-    User findByUserId(int userId);
+public interface UserRepository extends CrudRepository<User, Long>{
+    User findByUserId(Long userId);
 
     User findByUsername(String username);
 
     @Query("SELECT u.experienceLevel FROM User u WHERE u.userId = :userId")
-    List<Double> findExperienceLevelsByUserId(int userId);
+    List<Double> findExperienceLevelsByUserId(Long userId);
 }

@@ -7,7 +7,6 @@
   
     <link rel="stylesheet" href="workouts.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-
 </head>
 <body>
     <header>
@@ -15,33 +14,31 @@
           FitFlow Pro</h2>
           <nav class="navigation">
           <a th:href="@{/home}">Home</a>  
-          <a th:href="@{/services}">Services</a>    
           <button class="btnLogin-popup">Profile</button>
         </nav>
       </header>
 
-      <h1>Suggested Workouts</h1>
-      <p>Predicted Difficulty Rating: <span th:text="${predictedRating}"></span></p>
-      
-      <table>
-          <thead>
-              <tr>
-                  <th>Workout Name</th>
-                  <th>Description</th>
-                  <th>Body Part Focus</th>
-                  <th>Difficulty Rating</th>
-              </tr>
-          </thead>
-          <tbody>
-              <!-- Iterate over suggested workouts -->
-              <tr th:each="workout : ${suggestedWorkouts}">
-                  <td th:text="${workout.workoutName}"></td>
-                  <td th:text="${workout.workoutDesc}"></td>
-                  <td th:text="${workout.bodyPartFocus}"></td>
-                  <td th:text="${workout.difficultyRating}"></td>
-              </tr>
-          </tbody>
-      </table>
+    <h1>Suggested Workouts</h1>
+    <div th:each="entry : ${groupedWorkouts}">
+        <h2 th:text="${entry.key}"></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Description</th>
+                    <th>Difficulty Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate over workouts under each body part -->
+                <tr th:each="workout : ${entry.value}">
+                    <td th:text="${workout.workoutName}"></td>
+                    <td th:text="${workout.workoutDesc}"></td>
+                    <td th:text="${workout.difficultyRating}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>

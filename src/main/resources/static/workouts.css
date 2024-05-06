@@ -13,6 +13,10 @@ body{
     background-size: cover;
     background-position: center;
 } 
+.information-features{
+    margin-left: 20px;
+}
+
 
 :root{
         --bg-color:#222327;
@@ -115,3 +119,4 @@ th {
 tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 } 
+

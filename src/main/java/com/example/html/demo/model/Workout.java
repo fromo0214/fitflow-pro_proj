@@ -6,6 +6,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -16,7 +18,7 @@ public class Workout {
 
     @Id
     @Column(name = "workout_id")
-    private int workoutId;
+    private Long workoutId;
 
     @Column(name = "workout_name")
     private String workoutName;
@@ -31,14 +33,16 @@ public class Workout {
     @Column(name = "difficulty_rating")
     private double difficultyRating;
 
-    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL)
-    private List<SuggestedWorkouts> suggestedWorkouts;
+
+    @ManyToOne
+    @JoinColumn(name = "routine_id")
+    private WorkoutRoutine workoutRoutine;
 
     public Workout(){
         
     }
 
-    public Workout(int workoutId, String workoutName, String workoutDesc, String bodyPartFocus, int difficultyRating) {
+    public Workout(Long workoutId, String workoutName, String workoutDesc, String bodyPartFocus, int difficultyRating) {
         this.workoutId = workoutId;
         this.workoutName = workoutName;
         this.workoutDesc = workoutDesc;
@@ -46,11 +50,11 @@ public class Workout {
         this.difficultyRating = difficultyRating;
     }
 
-    public int getWorkoutId() {
+    public Long getWorkoutId() {
         return workoutId;
     }
 
-    public void setWorkoutId(int workoutId) {
+    public void setWorkoutId(Long workoutId) {
         this.workoutId = workoutId;
     }
 
@@ -84,7 +88,19 @@ public class Workout {
 
     public void setDifficultyRating(int difficultyRating) {
         this.difficultyRating = difficultyRating;
-    }    
+    }
+
+    public void setDifficultyRating(double difficultyRating) {
+        this.difficultyRating = difficultyRating;
+    }
+
+    public WorkoutRoutine getWorkoutRoutine() {
+        return workoutRoutine;
+    }
+
+    public void setWorkoutRoutine(WorkoutRoutine workoutRoutine) {
+        this.workoutRoutine = workoutRoutine;
+    }
 
     
 }

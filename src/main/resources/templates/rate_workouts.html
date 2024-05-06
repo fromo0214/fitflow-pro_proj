@@ -7,6 +7,7 @@
   
     <link rel="stylesheet" href="workouts.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -18,27 +19,30 @@
         </nav>
       </header>
 
-    <h1>All Workouts</h1>
-    <div th:each="entry : ${groupedWorkouts}">
-        <h2 th:text="${entry.key}"></h2>
+      <h1>Rate Workouts!</h1>
         <table>
             <thead>
                 <tr>
                     <th>Exercise</th>
-                    <th>Description</th>
                     <th>Difficulty Rating</th>
+                    <th>User Rating (1-5)</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Iterate over workouts under each body part -->
-                <tr th:each="workout : ${entry.value}">
-                    <td th:text="${workout.workoutName}"></td>
-                    <td th:text="${workout.workoutDesc}"></td>
-                    <td th:text="${workout.difficultyRating}"></td>
+                <tr th:each="entry : ${groupedWorkouts}">
+                    <td th:text="${entry.value[0].workoutName}"></td>
+                    <td th:text="${entry.value[0].difficultyRating}"></td>
+                    <td>
+                        <form method="post" action="/suggested_workouts">
+                            <input type="number" name="rating" min="1" max="5" step="0.1">
+                            <input type="hidden" name="userId" value="23">
+                            <input type="hidden" name="workoutId" th:value="${entry.value[0].workoutId}">
+                    </td>
                 </tr>
+                
             </tbody>
         </table>
-    </div>
-
+        <button type="submit">Submit Ratings</button>
+    </form>
 </body>
 </html>

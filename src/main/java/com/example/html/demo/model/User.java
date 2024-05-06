@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int userId;
+    private Long userId;
 
     @Column(name = "username")
     private String username;
@@ -52,20 +52,21 @@ public class User {
     private Double experienceLevel;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<SuggestedWorkouts> suggestedWorkouts;
+    @Column(name = "rated_workouts")
+    private List<Rating> ratedWorkouts;
 
     User(){
 
     }
 
-    public User(String username, String email, String passwd, double experienceLevel) {
+    public User(String username, String email, String passwd, Double experienceLevel) {
         this.username = username;
         this.email = email;
         this.passwd = passwd;
         this.experienceLevel = experienceLevel;
     }
 
-    public int getUserId(){
+    public Long getUserId(){
         return userId;
     }
 

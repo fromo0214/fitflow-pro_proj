@@ -9,13 +9,6 @@
         <link rel="stylesheet" href="style.css" type="text/css"/>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 
-        <script>
-          function redirectToOtherPage() {
-              var experienceLevel = document.getElementById("experienceLevel").value;
-              // Redirect to the other HTML page with the experience level as a query parameter
-              window.location.href = "suggested_workouts.html?experienceLevel=" + experienceLevel;
-          }
-      </script>
     </head>
 
     <body>
@@ -24,7 +17,6 @@
             FitFlow Pro</h2>
             <nav class="navigation">
             <a th:href="@{/home}">Home</a>  
-            <a th:href="@{/services}">Services</a>  
             <button class="btnLogin-popup">Login</button>
           </nav>
         </header>
@@ -68,7 +60,7 @@
       
           <div class=>
             <h2>Registration</h2>
-            <form action="home" method="post">
+            <form action="/registeredSuccessfully" method="post">
               <div class="input-box">
                 <span class="icon">
                   <ion-icon name="person"></ion-icon>                
@@ -108,7 +100,7 @@
             <div class="input-box">
                 <input type="number" id="startWeight" name="startWeight" required>
                 <label for="startWeight">Starting Weight (in lbs):</label>
-            </div>
+            </div> -->
             <div class="input-box">
               <input type="number" id="currentWeight" name="currentWeight" required>
               <label for="currentWeight">Current Weight (in lbs):</label>  
@@ -116,9 +108,9 @@
             <div class="input-box">
               <input type="number" id="goalWeight" name="goalWeight" required>
               <label for="goalWeight">Goal Weight (in lbs):</label>   
-            </div> -->
+            </div>
             <div class="input-box">
-                <input type="number" id="experienceLevel" name="experienceLevel" required>
+                <input type="number" id="experienceLevel" name="experienceLevel" required min="1" max="10">
                 <label for="experienceLevel">Experience Level from 1-10 (10 being very experienced):</label> 
             </div>
               <div>

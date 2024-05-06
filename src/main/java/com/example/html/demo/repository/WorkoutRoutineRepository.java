@@ -2,10 +2,9 @@ package com.example.html.demo.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-import com.example.html.demo.model.SuggestedWorkouts;
+import com.example.html.demo.model.WorkoutRoutine;
 
 @Repository
-public interface SuggestedWorkoutRepository extends CrudRepository<SuggestedWorkouts, Integer>{
+public interface WorkoutRoutineRepository extends CrudRepository<WorkoutRoutine, Long>{
 
 }

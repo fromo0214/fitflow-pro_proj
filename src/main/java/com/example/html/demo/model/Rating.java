@@ -1,31 +1,27 @@
 package com.example.html.demo.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "suggested_workouts_T")
-public class SuggestedWorkouts {
+@Table(name = "rating_table")
+public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "workout_id", nullable = false)
-    private Workout workout;
+    @ManyToOne
+    private WorkoutRoutine workoutRoutine;
 
-
+    private double rating;
 
     public int getId() {
         return id;
@@ -43,13 +39,22 @@ public class SuggestedWorkouts {
         this.user = user;
     }
 
-    public Workout getWorkout() {
-        return workout;
+    public WorkoutRoutine getWorkoutRoutine() {
+        return workoutRoutine;
     }
 
-    public void setWorkout(Workout workout) {
-        this.workout = workout;
+    public void setWorkout(WorkoutRoutine workout) {
+        this.workoutRoutine = workout;
     }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
 
     
 }
