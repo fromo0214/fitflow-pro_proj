@@ -122,7 +122,6 @@ public class WorkoutService {
     }
 
       public Map<String, List<Workout>> groupWorkoutsByBodyParts(List<Workout> workouts) {
-        // TODO Auto-generated method stub
         Map<String,List<Workout>> groupedWorkouts = new HashMap<>();
 
         for(Workout workout : workouts){

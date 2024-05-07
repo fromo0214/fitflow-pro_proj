@@ -16,29 +16,32 @@
           <a th:href="@{/home}">Home</a>  
           <button class="btnLogin-popup">Profile</button>
         </nav>
-      </header>
+    </header>
 
     <h1>Suggested Workouts</h1>
-    <div th:each="entry : ${groupedWorkouts}">
-        <h2 th:text="${entry.key}"></h2>
+    <div>
         <table>
             <thead>
                 <tr>
-                    <th>Exercise</th>
-                    <th>Description</th>
+                    <th>Routine Name</th>
+                    <th>Workouts</th>
                     <th>Difficulty Rating</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Iterate over workouts under each body part -->
-                <tr th:each="workout : ${entry.value}">
-                    <td th:text="${workout.workoutName}"></td>
-                    <td th:text="${workout.workoutDesc}"></td>
-                    <td th:text="${workout.difficultyRating}"></td>
+                <!-- Iterate over recommended workout routines -->
+                <tr th:each="routine : ${recommendations}">
+                    <td th:text="${routine.name}"></td>
+                    <td>
+                        <ul>
+                            <!-- Iterate over workouts in the routine -->
+                            <li th:each="workout : ${routine.workouts}" th:text="${workout.workoutName}"></li>
+                        </ul>
+                    </td>
+                    <td th:text="${routine.routineDifficulty}"></td>
                 </tr>
             </tbody>
         </table>
     </div>
-
 </body>
 </html>

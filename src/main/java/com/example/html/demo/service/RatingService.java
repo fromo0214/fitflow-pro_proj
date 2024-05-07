@@ -1,8 +1,5 @@
 package com.example.html.demo.service;
 
-import java.util.List;
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +10,9 @@ import com.example.html.demo.repository.RatingRepository;
 import com.example.html.demo.repository.UserRepository;
 import com.example.html.demo.repository.WorkoutRoutineRepository;
 
-import jakarta.transaction.Transactional;
-
 @Service
 //@Transactional
 public class RatingService {
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private RatingRepository ratingRepository;
@@ -31,11 +23,7 @@ public class RatingService {
     @Autowired
     private WorkoutRoutineRepository routineRepository;
 
-    @Autowired
-    private WorkoutRoutineService routineService;
-
     public double getRatingForWorkout(Long userId, Long routineId) {
-        // TODO Auto-generated method stub
         User user = userRepository.findById(userId).orElse(null);
         WorkoutRoutine workoutRoutine = routineRepository.findById(routineId).orElse(null);
 
@@ -67,6 +55,20 @@ public class RatingService {
 
         // Save the rating to the database
         ratingRepository.save(rating);
+    }
+
+    public void initializeRatings(){
+        User user = userRepository.findById(1L).orElse(null);  // Assuming user ID is 1
+        WorkoutRoutine workoutRoutine = routineRepository.findById(1L).orElse(null);  // Assuming routine ID is 1
+    
+        if (user != null && workoutRoutine != null) {
+         Rating rating = new Rating(user, workoutRoutine, 3.5);  // Hardcoded rating value
+            ratingRepository.save(rating);
+        } else {
+        // Handle case where user or workout routine is not found
+        System.out.println("User and workout routine not found");
+        }
+        
     }
 
     }

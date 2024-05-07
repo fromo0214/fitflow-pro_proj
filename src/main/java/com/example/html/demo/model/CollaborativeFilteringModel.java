@@ -3,13 +3,16 @@ package com.example.html.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CollaborativeFilteringModel {
 
     // Assume userItemMatrix is a 2D array representing user-item interactions
     // and similarityMatrix is a 2D array to store calculated similarities
 
     // Step 1: Calculate similarities
-    public void calculateSimilarities(double[][] userItemMatrix) {
+    public double[][] calculateSimilarities(double[][] userItemMatrix) {
         int numUsers = userItemMatrix.length;
         double[][] similarityMatrix = new double[numUsers][numUsers];
 
@@ -21,21 +24,26 @@ public class CollaborativeFilteringModel {
                 }
             }
         }
+        return similarityMatrix;
     }
     
     // Step 2: Generate recommendations
-    public List<WorkoutRoutine> generateRecommendations(double[][] userItemMatrix, double[][] similarityMatrix, int targetUser, List<WorkoutRoutine> allRoutines, double threshold) {
+    public List<WorkoutRoutine> generateRecommendations(double[][] userItemMatrix, double[][] similarityMatrix, Long targetUser, List<WorkoutRoutine> allRoutines, double threshold) {
         int numItems = userItemMatrix[0].length;
         List<WorkoutRoutine> recommendations = new ArrayList<>();
 
+        int targetUserIndex = targetUser.intValue();
+
         for (int item = 0; item < numItems; item++) {
-            if (userItemMatrix[targetUser][item] == 0) {
+            if (userItemMatrix[targetUserIndex][item] == 0) {
                 double similaritySum = 0;
                 double weightedRatingSum = 0;
 
+                
+
                 for (int user = 0; user < userItemMatrix.length; user++) {
                     if (userItemMatrix[user][item] != 0) {
-                        double similarity = similarityMatrix[targetUser][user];
+                        double similarity = similarityMatrix[targetUserIndex][user];
                         double rating = userItemMatrix[user][item];
                         similaritySum += similarity;
                         weightedRatingSum += similarity * rating;

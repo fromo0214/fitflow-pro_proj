@@ -2,16 +2,21 @@ package com.example.html.demo.generator;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.example.html.demo.model.User;
 import com.example.html.demo.model.Workout;
 import com.example.html.demo.model.WorkoutRoutine;
 import com.example.html.demo.service.RatingService;
 
+@Component
 public class UseritemMatrixGenerator {
 
-    
+    @Autowired
     private RatingService ratingService;
 
+    
     public double[][] generateUserItemMatrix(List<User> users, List<WorkoutRoutine> routines) {
         int numRows = users.size();
         int numCols = routines.size();

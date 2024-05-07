@@ -30,15 +30,15 @@ public class Rating {
 
     }
 
-    public Rating(Long userId, Long routineId, double rating){
-        this.user = new User();
-        this.user.setUserId(userId);
-
-        this.workoutRoutine = new WorkoutRoutine();
-        this.workoutRoutine.setRoutineId(routineId);
-
+    
+    
+    public Rating(User user, WorkoutRoutine workoutRoutine, double rating) {
+        this.user = user;
+        this.workoutRoutine = workoutRoutine;
         this.rating = rating;
     }
+
+
 
     public Long getId() {
         return ratingId;
@@ -70,6 +70,11 @@ public class Rating {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+
+    public Long getRatingId() {
+        return ratingId;
     }
 
 
