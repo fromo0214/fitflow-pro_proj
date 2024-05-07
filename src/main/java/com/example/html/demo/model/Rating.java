@@ -1,5 +1,6 @@
 package com.example.html.demo.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +14,7 @@ public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ratingId")
     private Long ratingId;
 
     @ManyToOne
@@ -21,7 +23,22 @@ public class Rating {
     @ManyToOne
     private WorkoutRoutine workoutRoutine;
 
+    @Column(name = "rating")
     private double rating;
+
+    public Rating(){
+
+    }
+
+    public Rating(Long userId, Long routineId, double rating){
+        this.user = new User();
+        this.user.setUserId(userId);
+
+        this.workoutRoutine = new WorkoutRoutine();
+        this.workoutRoutine.setRoutineId(routineId);
+
+        this.rating = rating;
+    }
 
     public Long getId() {
         return ratingId;
@@ -43,7 +60,7 @@ public class Rating {
         return workoutRoutine;
     }
 
-    public void setWorkout(WorkoutRoutine workout) {
+    public void setWorkoutRoutine(WorkoutRoutine workout) {
         this.workoutRoutine = workout;
     }
 

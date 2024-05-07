@@ -1,5 +1,8 @@
 package com.example.html.demo.service;
 
+import java.util.List;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,9 @@ import jakarta.transaction.Transactional;
 public class RatingService {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private RatingRepository ratingRepository;
 
     @Autowired
@@ -24,6 +30,9 @@ public class RatingService {
 
     @Autowired
     private WorkoutRoutineRepository routineRepository;
+
+    @Autowired
+    private WorkoutRoutineService routineService;
 
     public double getRatingForWorkout(Long userId, Long routineId) {
         // TODO Auto-generated method stub
@@ -45,4 +54,20 @@ public class RatingService {
         }
     }
 
-}
+    public void saveRating(Long userId, Long routineId, double ratingValue) {
+        // Retrieve user and workout routine entities
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        WorkoutRoutine routine = routineRepository.findById(routineId).orElseThrow(() -> new IllegalArgumentException("Workout routine not found"));
+
+        // Create a new rating entity and set its properties
+        Rating rating = new Rating();
+        rating.setUser(user);
+        rating.setWorkoutRoutine(routine);
+        rating.setRating(ratingValue);
+
+        // Save the rating to the database
+        ratingRepository.save(rating);
+    }
+
+    }
+

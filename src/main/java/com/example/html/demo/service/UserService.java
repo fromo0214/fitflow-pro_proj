@@ -86,9 +86,7 @@ public class UserService {
 
 
     public User saveUserDetails(User user){
-
         return userRepository.save(user);
-        
     } 
 
     public User findByUsername(String username){
@@ -129,4 +127,6 @@ public class UserService {
     public List<User> getAllUsers(){
         return  (List<User>) userRepository.findAll(); 
     }
+
+    
 }

@@ -1,5 +1,6 @@
 package com.example.html.demo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -51,9 +52,8 @@ public class User {
     @Column(name = "experience_level")
     private Double experienceLevel;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @Column(name = "rated_workouts")
-    private List<Rating> ratedWorkouts;
+    @OneToMany
+    private List<Rating> ratedRoutines;
 
     User(){
 
@@ -64,6 +64,17 @@ public class User {
         this.email = email;
         this.passwd = passwd;
         this.experienceLevel = experienceLevel;
+    }
+
+      public void rateWorkoutRoutine(WorkoutRoutine routine, double ratingValue) {
+        Rating rating = new Rating();
+        rating.setUser(this);
+        rating.setWorkoutRoutine(routine);
+        rating.setRating(ratingValue);
+        if (ratedRoutines == null) {
+            ratedRoutines = new ArrayList<>();
+        }
+        ratedRoutines.add(rating);
     }
 
     public Long getUserId(){
@@ -136,6 +147,10 @@ public class User {
                 + ", height=" + height + ", gender=" + gender + ", dob=" + dob + ", startingWeight=" + startWeight
                 + ", currentWeight=" + currentWeight + ", goalWeight=" + goalWeight + ", experienceLevel=" + experienceLevel
                 + "]";
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
     
 }
