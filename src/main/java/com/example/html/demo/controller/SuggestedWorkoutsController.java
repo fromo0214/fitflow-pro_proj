@@ -50,10 +50,12 @@ public class SuggestedWorkoutsController {
     @GetMapping("suggested_workouts")
     public String getMethodName(Model model) {
         List<User> allUsers = userService.getAllUsers();
-
         List<WorkoutRoutine> allRoutines = routineService.getAllRoutines();
 
-        List<WorkoutRoutine> recommendations = recommendationService.getRecommendations(allUsers, allRoutines);
+        int activeUserIndex = 23;
+        int k = 3;
+
+        List<WorkoutRoutine> recommendations = recommendationService.getRecommendations(allUsers, allRoutines, activeUserIndex, k);
 
         model.addAttribute("recommendations", recommendations);
 

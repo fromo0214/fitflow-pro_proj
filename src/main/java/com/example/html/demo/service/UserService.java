@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.html.demo.model.Rating;
 import com.example.html.demo.model.User;
+import com.example.html.demo.model.Workout;
+import com.example.html.demo.model.WorkoutRoutine;
 import com.example.html.demo.repository.UserRepository;
 
 @Service
@@ -13,6 +16,11 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RatingService ratingService;
+
+    @Autowired WorkoutService workoutService;
 
     public void initializeUsers(){
         User user1 = new User("test1", "hello@gmail.com", "test", 5.0);
@@ -83,10 +91,9 @@ public class UserService {
 
     }
 
-
-
     public User saveUserDetails(User user){
-        return userRepository.save(user);
+        userRepository.save(user);
+        return user;
     } 
 
     public User findByUsername(String username){

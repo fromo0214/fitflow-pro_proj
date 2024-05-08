@@ -11,54 +11,86 @@ public class CollaborativeFilteringModel {
     // Assume userItemMatrix is a 2D array representing user-item interactions
     // and similarityMatrix is a 2D array to store calculated similarities
 
-    // Step 1: Calculate similarities
-    public double[][] calculateSimilarities(double[][] userItemMatrix) {
-        int numUsers = userItemMatrix.length;
+    // Method to hard code a similarity matrix based on predefined ratings
+    public double[][] hardCodeSimilarityMatrix() {
+        // Define the number of users
+        int numUsers = 3; // Example: 3 users
+
+        // Define the similarity matrix
         double[][] similarityMatrix = new double[numUsers][numUsers];
 
-        for (int user1 = 0; user1 < numUsers; user1++) {
-            for (int user2 = 0; user2 < numUsers; user2++) {
-                if (user1 != user2) {
-                    double similarity = calculateSimilarity(userItemMatrix[user1], userItemMatrix[user2]);
-                    similarityMatrix[user1][user2] = similarity;
+        // Hard code the similarity values based on ratings
+        // Example: Assuming ratings for three users are [4.5, 3.0, 2.0]
+        double[] user1Ratings = {4.5, 0.0, 0.0};
+        double[] user2Ratings = {3.0, 4.0, 0.0};
+        double[] user3Ratings = {2.0, 0.0, 5.0};
+
+        // Calculate similarities based on ratings (e.g., cosine similarity)
+        for (int i = 0; i < numUsers; i++) {
+            for (int j = 0; j < numUsers; j++) {
+                if (i != j) {
+                    similarityMatrix[i][j] = calculateSimilarity(user1Ratings, user2Ratings);
+                    // You can use different similarity metrics or weighting methods here
                 }
             }
         }
+
         return similarityMatrix;
     }
+
+    // Step 1: Calculate similarities
+    public List<Double> calculateSimilarities(double[][] userItemMatrix, int activeUserIndex) {
+        List<Double> similarities = new ArrayList<>();
+
+        double[] activeUserRatings = userItemMatrix[activeUserIndex];
+
+        for(int userIndex = 0; userIndex < userItemMatrix.length; userIndex++){
+            if(userIndex != activeUserIndex){
+                double similarity = calculateSimilarity(activeUserRatings, userItemMatrix[userIndex]);
+                similarities.add(similarity);
+            }
+        }
+        return similarities;
+    }
     
-    // Step 2: Generate recommendations
-    public List<WorkoutRoutine> generateRecommendations(double[][] userItemMatrix, double[][] similarityMatrix, Long targetUser, List<WorkoutRoutine> allRoutines, double threshold) {
-        int numItems = userItemMatrix[0].length;
+    public List<WorkoutRoutine> generateRecommendations(double[][] userItemMatrix, List<Double> similarities,
+                                                        List<WorkoutRoutine> allRoutines, int activeUserIndex, int k) {
         List<WorkoutRoutine> recommendations = new ArrayList<>();
 
-        int targetUserIndex = targetUser.intValue();
+        // Calculate weighted average of ratings from similar users
+        double weightedSum = 0;
+        double similaritySum = 0;
 
-        for (int item = 0; item < numItems; item++) {
-            if (userItemMatrix[targetUserIndex][item] == 0) {
-                double similaritySum = 0;
-                double weightedRatingSum = 0;
+        // Iterate over users to find similar ones
+        for (int userIndex = 0; userIndex < userItemMatrix.length; userIndex++) {
+            if (userIndex != activeUserIndex) { // Exclude the active user
+                double similarity = similarities.get(userIndex);
+                double[] userRatings = userItemMatrix[userIndex];
 
-                
-
-                for (int user = 0; user < userItemMatrix.length; user++) {
-                    if (userItemMatrix[user][item] != 0) {
-                        double similarity = similarityMatrix[targetUserIndex][user];
-                        double rating = userItemMatrix[user][item];
+                for (int routineIndex = 0; routineIndex < userRatings.length; routineIndex++) {
+                    if (userItemMatrix[activeUserIndex][routineIndex] == 0 && userRatings[routineIndex] != 0) {
+                        // If the active user hasn't rated the routine but the similar user has
+                        weightedSum += similarity * userRatings[routineIndex];
                         similaritySum += similarity;
-                        weightedRatingSum += similarity * rating;
-                    }
-                }
-
-                if (similaritySum > 0) {
-                    double predictedRating = weightedRatingSum / similaritySum;
-                    // Add the workout to recommendations if predicted rating is above a threshold
-                    if (predictedRating >= threshold) {
-                        recommendations.add(allRoutines.get(item));
                     }
                 }
             }
         }
+
+        // Calculate predicted ratings and generate recommendations
+        if (similaritySum != 0) {
+            double predictedRating = weightedSum / similaritySum;
+
+            for (int routineIndex = 0; routineIndex < userItemMatrix[activeUserIndex].length; routineIndex++) {
+                if (userItemMatrix[activeUserIndex][routineIndex] == 0) {
+                    // If the active user hasn't rated the routine, add it to recommendations
+                    WorkoutRoutine recommendedRoutine = allRoutines.get(routineIndex);
+                    recommendedRoutine.setPredictedRating(predictedRating); // Optionally set predicted rating
+                    recommendations.add(recommendedRoutine);
+                }
+            }
+        }
+
         return recommendations;
     }
 

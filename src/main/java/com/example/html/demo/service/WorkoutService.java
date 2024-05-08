@@ -109,7 +109,6 @@ public class WorkoutService {
         Workout workout23 = new Workout(23L, "Push-ups", "Basic push-up exercise to strengthen the chest, shoulders, and triceps.", 
         "Chest", 3);
         saveWorkout(workout23);
-
     }
 
     //saves workout to the database

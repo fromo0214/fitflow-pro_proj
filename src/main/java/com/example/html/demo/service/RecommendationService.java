@@ -19,12 +19,14 @@ public class RecommendationService {
     @Autowired
     private CollaborativeFilteringModel filteringModel;
 
-    public List<WorkoutRoutine> getRecommendations(List<User> allUser, List<WorkoutRoutine> allRoutines){
+    public List<WorkoutRoutine> getRecommendations(List<User> allUser, List<WorkoutRoutine> allRoutines, int activeUserIndex, int k){
         double[][] userItemMatrix = matrixGenerator.generateUserItemMatrix(allUser, allRoutines);
 
-        double[][] similarityMatrix = filteringModel.calculateSimilarities(userItemMatrix);
+        // double[][] similarityMatrix = filteringModel.calculateSimilarities(userItemMatrix);
 
-        List<WorkoutRoutine> recommendations = filteringModel.generateRecommendations(userItemMatrix, similarityMatrix, 23L, allRoutines, 1  );
+        List<Double> similarites = filteringModel.calculateSimilarities(userItemMatrix, activeUserIndex);
+
+        List<WorkoutRoutine> recommendations = filteringModel.generateRecommendations(userItemMatrix, similarites, allRoutines, activeUserIndex, k);
 
         return recommendations;
     }

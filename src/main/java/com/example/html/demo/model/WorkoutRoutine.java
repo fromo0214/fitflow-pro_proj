@@ -22,6 +22,9 @@ public class WorkoutRoutine {
     @Column(name = "routine_difficulty")
     private double routineDifficulty;
 
+    @Column(name = "predicted_ratings")
+    private double predictedRating;
+
     @OneToMany
     private List<Workout> workouts;
 
@@ -68,6 +71,14 @@ public class WorkoutRoutine {
 
     public void setRoutineDifficulty(double routineDifficulty) {
         this.routineDifficulty = routineDifficulty;
+    }
+
+    public void setPredictedRating(double predictedRating) {
+        this.predictedRating = predictedRating;
+    }
+
+    public double getPredictedRating(){
+        return predictedRating;
     }
     
 }
