@@ -1,0 +1,183 @@
+@startuml class_diagram
+
+package "Driver"{
+      class DemoApplication {
+        + main(String[]): void
+    }
+}
+
+package "Controller" {
+        class HomeController {
+        + registerUser(user: User, model: Model): String
+        + home(model: Model): String
+    }
+
+    class IndexController {
+        + index(): String
+    }
+
+    class RatingController {
+        + getMethodName(model: Model): String
+    }
+
+    class WorkoutController {
+        + showWorkouts(user: User, model: Model): String
+    }
+
+    class SuggestedWorkoutsController {
+        - ratingService: RatingService
+        - routineService: WorkoutRoutineService
+        - workoutService: WorkoutService
+        - recommendationService: RecommendationService
+        - userService: UserService
+        + postMethodName(userId: Long, routineId: Long, ratingValue: double): String
+        + getMethodName(model: Model): String
+    }
+}
+
+package "Model" {
+    class User {
+        - userId: Long
+        - username: String
+        - email: String
+        - passwd: String
+        - height: String
+        - gender: String
+        - dob: String
+        - startWeight: int
+        - currentWeight: int
+        - goalWeight: int
+        - experienceLevel: Double
+        - ratedRoutines: List<Rating>
+        --
+        + getters/setters
+    }
+    
+    class Workout {
+        - workoutId: Long
+        - workoutName: String
+        - workoutDesc: String
+        - bodyPartFocus: String
+        - difficultyRating : double
+        - workoutRoutine : WorkoutRoutine
+        --
+        + getters/setters
+    }
+
+    class WorkoutRoutine {
+        - routineId: Long
+        - name: String
+        - routineDifficulty: double
+        - predictedRating: double
+        - workouts: List<Workout>
+    }
+    
+    class Rating {
+        - ratingId: Long
+        - user: User
+        - workoutRoutine: WorkoutRoutine
+        - rating: double
+    }
+
+    class CollaborativeFilteringModel {
+        - ratingRepository: RatingRepository
+        --
+        + fetchRatings(allUsers: List<User>, allRoutines: List<WorkoutRoutine>): double[][]
+        + calculateSimilarities(userItemMatrix: double[][], activeUserIndex: Long): List<Double>
+        + generateRecommendations(userItemMatrix: double[][], similarities: List<Double>, allRoutines: List<WorkoutRoutine>, activeUserIndex: Long, k: int): List<WorkoutRoutine>
+        - calculateSimilarity(user1Ratings: double[], user2Ratings: double[]): double
+    }
+
+    class UseritemMatrixGenerator {
+        - ratingService: RatingService
+        --
+        + generateUserItemMatrix(users: List<User>, routines: List<WorkoutRoutine>): double[][]
+        - getAverageRatingForRoutine(user: User, routine: WorkoutRoutine): double
+    }
+}
+
+package "Repository"{
+      interface RatingRepository {
+        findByUserAndWorkoutRoutine(user: User, workoutRoutine: WorkoutRoutine): Rating
+    }
+
+    interface UserRepository {
+        findByUserId(userId: Long): User
+        findByUsername(username: String): User
+        findExperienceLevelsByUserId(userId: Long): List<Double>
+    }
+
+    interface WorkoutRepository {
+        findByDifficultyRating(difficultyRating: double): Workout
+        findDifficultyRatings(): List<Double>
+    }
+
+    interface WorkoutRoutineRepository {}
+}
+
+package "Initializer" {
+
+    class UserInitializer {
+        + initialize(): void
+    }
+
+    class WorkoutInitializer {
+        + initialize(): void
+    }
+
+    class WorkoutRoutineInitializer {
+        + initialize(): void
+    }
+
+}
+
+
+package "Service" {
+     class RatingService {
+        - ratingRepository: RatingRepository
+        - userRepository: UserRepository
+        - routineRepository: WorkoutRoutineRepository
+        --
+        + getRatingForWorkout(userId: Long, routineId: Long): double
+        + saveRating(userId: Long, routineId: Long, ratingValue: double): void
+        + getAllRatings(): List<Rating>
+    }
+
+    
+    class RecommendationService {
+        - matrixGenerator: UseritemMatrixGenerator
+        - filteringModel: CollaborativeFilteringModel
+        + getRecommendations(allUser: List<User>, allRoutines: List<WorkoutRoutine>, activeUserIndex: Long, k: int): List<WorkoutRoutine>
+    }
+
+  class UserService {
+        - userRepository: UserRepository
+        - ratingService: RatingService
+        - workoutService: WorkoutService
+        --
+        + initializeUsers(): void
+        + saveUserDetails(user: User): User
+        + getAllUsers(): List<User>
+    }
+
+
+    class WorkoutRoutineService {
+        - workoutService: WorkoutService
+        - workoutRoutineRepository: WorkoutRoutineRepository
+        --
+        + initializeWorkoutRoutines(): void
+        + getAllRoutines(): List<WorkoutRoutine>
+    }
+
+    class WorkoutService {
+            - workoutRepository: WorkoutRepository
+            --
+            + initializeWorkout(): void
+            + saveWorkout(workout: Workout): Workout
+            + getAllWorkouts(): List<Workout>
+            + groupWorkoutsByBodyParts(workouts: List<Workout>): Map<String, List<Workout>>
+            + groupWorkoutsByDifficulty(workouts: List<Workout>): Map<Double, List<Workout>>
+        }
+}
+
+@enduml

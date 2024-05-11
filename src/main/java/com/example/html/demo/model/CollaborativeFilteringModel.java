@@ -3,7 +3,10 @@ package com.example.html.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.example.html.demo.repository.RatingRepository;
 
 @Component
 public class CollaborativeFilteringModel {
@@ -11,38 +14,32 @@ public class CollaborativeFilteringModel {
     // Assume userItemMatrix is a 2D array representing user-item interactions
     // and similarityMatrix is a 2D array to store calculated similarities
 
-    // Method to hard code a similarity matrix based on predefined ratings
-    public double[][] hardCodeSimilarityMatrix() {
-        // Define the number of users
-        int numUsers = 3; // Example: 3 users
+    @Autowired
+    private RatingRepository ratingRepository;
 
-        // Define the similarity matrix
-        double[][] similarityMatrix = new double[numUsers][numUsers];
-
-        // Hard code the similarity values based on ratings
-        // Example: Assuming ratings for three users are [4.5, 3.0, 2.0]
-        double[] user1Ratings = {4.5, 0.0, 0.0};
-        double[] user2Ratings = {3.0, 4.0, 0.0};
-        double[] user3Ratings = {2.0, 0.0, 5.0};
-
-        // Calculate similarities based on ratings (e.g., cosine similarity)
-        for (int i = 0; i < numUsers; i++) {
-            for (int j = 0; j < numUsers; j++) {
-                if (i != j) {
-                    similarityMatrix[i][j] = calculateSimilarity(user1Ratings, user2Ratings);
-                    // You can use different similarity metrics or weighting methods here
+        public double[][] fetchRatings(List<User> allUsers, List<WorkoutRoutine> allRoutines) {
+            int numUsers = allUsers.size();
+            int numRoutines = allRoutines.size();
+            double[][] userItemMatrix = new double[numUsers][numRoutines];
+    
+            for (int i = 0; i < numUsers; i++) {
+                User user = allUsers.get(i);
+                for (int j = 0; j < numRoutines; j++) {
+                    WorkoutRoutine routine = allRoutines.get(j);
+                    Rating rating = ratingRepository.findByUserAndWorkoutRoutine(user, routine);
+                    userItemMatrix[i][j] = (rating != null) ? rating.getRating() : 0; 
                 }
             }
+    
+            return userItemMatrix;
         }
 
-        return similarityMatrix;
-    }
 
-    // Step 1: Calculate similarities
-    public List<Double> calculateSimilarities(double[][] userItemMatrix, int activeUserIndex) {
+    public List<Double> calculateSimilarities(double[][] userItemMatrix, Long activeUserIndex) {
         List<Double> similarities = new ArrayList<>();
 
-        double[] activeUserRatings = userItemMatrix[activeUserIndex];
+        int activeUserIdx = activeUserIndex.intValue();
+        double[] activeUserRatings = userItemMatrix[activeUserIdx];
 
         for(int userIndex = 0; userIndex < userItemMatrix.length; userIndex++){
             if(userIndex != activeUserIndex){
@@ -54,13 +51,13 @@ public class CollaborativeFilteringModel {
     }
     
     public List<WorkoutRoutine> generateRecommendations(double[][] userItemMatrix, List<Double> similarities,
-                                                        List<WorkoutRoutine> allRoutines, int activeUserIndex, int k) {
+                                                        List<WorkoutRoutine> allRoutines, Long activeUserIndex, int k) {
         List<WorkoutRoutine> recommendations = new ArrayList<>();
 
         // Calculate weighted average of ratings from similar users
         double weightedSum = 0;
         double similaritySum = 0;
-
+        int activeUserIdx = activeUserIndex.intValue();
         // Iterate over users to find similar ones
         for (int userIndex = 0; userIndex < userItemMatrix.length; userIndex++) {
             if (userIndex != activeUserIndex) { // Exclude the active user
@@ -68,7 +65,7 @@ public class CollaborativeFilteringModel {
                 double[] userRatings = userItemMatrix[userIndex];
 
                 for (int routineIndex = 0; routineIndex < userRatings.length; routineIndex++) {
-                    if (userItemMatrix[activeUserIndex][routineIndex] == 0 && userRatings[routineIndex] != 0) {
+                    if (userItemMatrix[activeUserIdx][routineIndex] == 0 && userRatings[routineIndex] != 0) {
                         // If the active user hasn't rated the routine but the similar user has
                         weightedSum += similarity * userRatings[routineIndex];
                         similaritySum += similarity;
@@ -81,8 +78,8 @@ public class CollaborativeFilteringModel {
         if (similaritySum != 0) {
             double predictedRating = weightedSum / similaritySum;
 
-            for (int routineIndex = 0; routineIndex < userItemMatrix[activeUserIndex].length; routineIndex++) {
-                if (userItemMatrix[activeUserIndex][routineIndex] == 0) {
+            for (int routineIndex = 0; routineIndex < userItemMatrix[activeUserIdx].length; routineIndex++) {
+                if (userItemMatrix[activeUserIdx][routineIndex] == 0) {
                     // If the active user hasn't rated the routine, add it to recommendations
                     WorkoutRoutine recommendedRoutine = allRoutines.get(routineIndex);
                     recommendedRoutine.setPredictedRating(predictedRating); // Optionally set predicted rating
@@ -96,7 +93,6 @@ public class CollaborativeFilteringModel {
 
     // Calculate similarity between two users (cosine similarity)
     private double calculateSimilarity(double[] user1Ratings, double[] user2Ratings) {
-        // Your implementation here
         double dotProduct = 0;
         double magnitudeUser1 = 0;
         double magnitudeUser2 = 0;
@@ -111,7 +107,7 @@ public class CollaborativeFilteringModel {
         magnitudeUser2 = Math.sqrt(magnitudeUser2);
 
         if (magnitudeUser1 * magnitudeUser2 == 0) {
-            return 0; // Handle division by zero
+            return 0;
         }
 
         return dotProduct / (magnitudeUser1 * magnitudeUser2);
