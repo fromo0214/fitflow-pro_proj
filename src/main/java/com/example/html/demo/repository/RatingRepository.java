@@ -19,5 +19,7 @@ public interface RatingRepository extends CrudRepository<Rating, Long>{
     @Query(value = "SELECT user_id, routine_id, rating FROM rating_table", nativeQuery = true)
     List<Object[]> findUserRatings();
 
+    List<Rating> findByUser(User user);
+
 
 }

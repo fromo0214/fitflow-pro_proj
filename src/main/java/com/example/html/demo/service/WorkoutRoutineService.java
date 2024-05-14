@@ -48,5 +48,9 @@ public class WorkoutRoutineService {
     public List<WorkoutRoutine> getAllRoutines(){
         return (List<WorkoutRoutine>) workoutRoutineRepository.findAll();
     }
+
+    public WorkoutRoutine findById(Long routineId) {
+        return workoutRoutineRepository.findById(routineId).orElse(null);
+    }
     
 }
