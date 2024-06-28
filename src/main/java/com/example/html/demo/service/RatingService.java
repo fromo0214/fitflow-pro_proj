@@ -7,14 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.html.demo.model.Rating;
 import com.example.html.demo.model.User;
-import com.example.html.demo.model.Workout;
 import com.example.html.demo.model.WorkoutRoutine;
 import com.example.html.demo.repository.RatingRepository;
 import com.example.html.demo.repository.UserRepository;
 import com.example.html.demo.repository.WorkoutRoutineRepository;
 
 @Service
-//@Transactional
 public class RatingService {
 
     @Autowired
@@ -26,7 +24,6 @@ public class RatingService {
     @Autowired
     private WorkoutRoutineRepository routineRepository;
 
-    private WorkoutService workoutService;
 
     public double getRatingForWorkout(Long userId, Long routineId) {
         User user = userRepository.findById(userId).orElse(null);
@@ -47,25 +44,24 @@ public class RatingService {
         }
     }
 
-    public void saveRating(Long userId, Long routineId, double ratingValue) {
+    public void saveRating(User user, WorkoutRoutine workoutRoutine, double ratingValue) {
         // Retrieve user and workout routine entities
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        WorkoutRoutine routine = routineRepository.findById(routineId).orElseThrow(() -> new IllegalArgumentException("Workout routine not found"));
-
         // Create a new rating entity and set its properties
         Rating rating = new Rating();
         rating.setUser(user);
-        rating.setWorkoutRoutine(routine);
+        rating.setWorkoutRoutine(workoutRoutine);
         rating.setRating(ratingValue);
 
         // Save the rating to the database
         ratingRepository.save(rating);
     }
         
-    // public void initializeRatings(){
- 
+    public List<Rating> getAllRatings(){
+        return (List<Rating>) ratingRepository.findAll();
+    }
 
-
-    // }
+    public List<Object[]> getUserRatings() {
+        return ratingRepository.findUserRatings();
+    }
 
     }

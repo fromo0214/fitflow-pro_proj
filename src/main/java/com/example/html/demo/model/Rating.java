@@ -31,7 +31,6 @@ public class Rating {
     }
 
     
-    
     public Rating(User user, WorkoutRoutine workoutRoutine, double rating) {
         this.user = user;
         this.workoutRoutine = workoutRoutine;
@@ -76,7 +75,7 @@ public class Rating {
     public Long getRatingId() {
         return ratingId;
     }
-
+    
 
     
 }

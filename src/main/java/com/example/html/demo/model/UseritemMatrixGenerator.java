@@ -1,13 +1,10 @@
-package com.example.html.demo.generator;
+package com.example.html.demo.model;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.html.demo.model.User;
-import com.example.html.demo.model.Workout;
-import com.example.html.demo.model.WorkoutRoutine;
 import com.example.html.demo.service.RatingService;
 
 @Component

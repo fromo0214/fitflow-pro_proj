@@ -32,8 +32,6 @@ public class WorkoutController {
         model.addAttribute("groupedWorkouts", groupedWorkouts);
         return "workouts";
     }
-
-      //method to group the workouts by body part focus
     
 
 }
