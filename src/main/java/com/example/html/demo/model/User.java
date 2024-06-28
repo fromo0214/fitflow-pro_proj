@@ -54,6 +54,11 @@ public class User {
     @OneToMany
     private List<Rating> ratedRoutines;
 
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+
     User(){
 
     }
@@ -140,6 +145,7 @@ public class User {
     public void setExperienceLevel(Double experienceLevel) {
         this.experienceLevel = experienceLevel;
     }
+    
     @Override
     public String toString() {
         return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", passwd=" + passwd
@@ -150,6 +156,46 @@ public class User {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public List<Rating> getRatedRoutines() {
+        return ratedRoutines;
+    }
+
+    public void setRatedRoutines(List<Rating> ratedRoutines) {
+        this.ratedRoutines = ratedRoutines;
+    }
+
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
     
 }

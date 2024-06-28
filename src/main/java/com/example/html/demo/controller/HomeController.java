@@ -1,6 +1,7 @@
 package com.example.html.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,26 @@ public class HomeController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/registeredSuccessfully")
     public String registerUser(@ModelAttribute User user, Model model) {
         System.out.println(user.toString());
+
+        //encoding password before saving the user to db
+        user.setPasswd(passwordEncoder.encode(user.getPasswd()));
+
+        //sets all true 
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+
+        //saves user to the db
         user = userRepository.save(user);
+
+        //using thymeleaf templating here to display the user details on the front-end
         model.addAttribute("username", user.getUsername());
         model.addAttribute("currentWeight", user.getCurrentWeight());
         model.addAttribute("goalWeight", user.getGoalWeight());
@@ -32,4 +49,9 @@ public class HomeController {
     public String home(Model model){
         return "home";
     }
+
+    // @GetMapping("/login")
+    // public String login(){
+    //     return "home";
+    // }
 }
