@@ -65,11 +65,19 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(Model model){
-        return "home";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("currentWeight", user.getCurrentWeight());
+        model.addAttribute("goalWeight", user.getGoalWeight());
+        model.addAttribute("experienceLevel", user.getExperienceLevel());
+        return "redirect:/home";
     }
 
     @GetMapping("/login")
     public String login(){
         return "index";
     }
+
 }
+
