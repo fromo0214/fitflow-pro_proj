@@ -1,31 +1,31 @@
-package com.example.html.demo.service;
+// package com.example.html.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.core.userdetails.UserDetails;
+// import org.springframework.security.core.userdetails.UserDetailsService;
+// import org.springframework.security.core.userdetails.UsernameNotFoundException;
+// import org.springframework.stereotype.Service;
 
-import com.example.html.demo.repository.UserRepository;
-import com.example.html.demo.model.User;
-import com.example.html.demo.security.CustomUserDetails;
+// import com.example.html.demo.repository.UserRepository;
+// import com.example.html.demo.model.User;
+// import com.example.html.demo.security.CustomUserDetails;
 
 
-@Service
-public class CustomUserDetailsService implements UserDetailsService{
-    @Autowired
-    private UserRepository userRepository;
+// @Service
+// public class CustomUserDetailsService implements UserDetailsService{
+//     @Autowired
+//     private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+//     @Override
+//     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//         User user = userRepository.findByUsername(username);
 
-        if(user == null){
-            throw new UsernameNotFoundException("User not found");
-        }
+//         if(user == null){
+//             throw new UsernameNotFoundException("User not found");
+//         }
         
-        return new CustomUserDetails(user); 
-    }
-}
+//         return new CustomUserDetails(user); 
+//     }
+// }
 
 

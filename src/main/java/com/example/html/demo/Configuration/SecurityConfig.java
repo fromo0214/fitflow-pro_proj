@@ -22,12 +22,13 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
         .authorizeHttpRequests((requests) -> requests
-            .requestMatchers("/", "/registeredSuccessfully","/css/**", "/js/**", "/images/**", "/h2/**", "/home").permitAll() // Allow public access to registration and static resources
+            .requestMatchers("/login", "/register","/css/**", "/js/**", "/images/**", "/h2/**", "/home").permitAll() // Allow public access to registration and static resources
             .anyRequest().authenticated()                                               //allows users without accounts to access the /register url
         )                                                                               // and css/js resources from the template, .permitall() allows access to urls without
                                                                                         // authentication
         .formLogin((form) -> form   //configures form based log in
-            .loginPage("/") //specifies the custom log in url
+            .loginPage("/login") //specifies the custom log in url
+            .defaultSuccessUrl("/home", true)
             .permitAll() //allows all access to the url without authentication 
         )
         .logout((logout) -> logout //configures a log out functionality

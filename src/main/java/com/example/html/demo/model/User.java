@@ -28,7 +28,7 @@ public class User {
     private String email;
 
     @Column(name = "password")
-    private String passwd;
+    private String password;
 
     @Column(name = "height")
     private String height;
@@ -54,19 +54,19 @@ public class User {
     @OneToMany
     private List<Rating> ratedRoutines;
 
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
-    private boolean enabled;
+    // private boolean accountNonExpired;
+    // private boolean accountNonLocked;
+    // private boolean credentialsNonExpired;
+    // private boolean enabled;
 
-    User(){
+    public User(){
 
     }
 
-    public User(String username, String email, String passwd, Double experienceLevel) {
+    public User(String username, String email, String password, Double experienceLevel) {
         this.username = username;
         this.email = email;
-        this.passwd = passwd;
+        this.password = password;
         this.experienceLevel = experienceLevel;
     }
 
@@ -97,11 +97,11 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getPasswd() {
-        return passwd;
+    public String getPassword() {
+        return password;
     }
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
     public String getHeight() {
         return height;
@@ -148,7 +148,7 @@ public class User {
     
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", passwd=" + passwd
+        return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", passwd=" + password
                 + ", height=" + height + ", gender=" + gender + ", dob=" + dob + ", startingWeight=" + startWeight
                 + ", currentWeight=" + currentWeight + ", goalWeight=" + goalWeight + ", experienceLevel=" + experienceLevel
                 + "]";
@@ -166,36 +166,36 @@ public class User {
         this.ratedRoutines = ratedRoutines;
     }
 
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
+    // public boolean isAccountNonExpired() {
+    //     return accountNonExpired;
+    // }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
+    // public void setAccountNonExpired(boolean accountNonExpired) {
+    //     this.accountNonExpired = accountNonExpired;
+    // }
 
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
+    // public boolean isAccountNonLocked() {
+    //     return accountNonLocked;
+    // }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
+    // public void setAccountNonLocked(boolean accountNonLocked) {
+    //     this.accountNonLocked = accountNonLocked;
+    // }
 
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
+    // public boolean isCredentialsNonExpired() {
+    //     return credentialsNonExpired;
+    // }
 
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
+    // public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+    //     this.credentialsNonExpired = credentialsNonExpired;
+    // }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
+    // public boolean isEnabled() {
+    //     return enabled;
+    // }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+    // public void setEnabled(boolean enabled) {
+    //     this.enabled = enabled;
+    // }
     
 }

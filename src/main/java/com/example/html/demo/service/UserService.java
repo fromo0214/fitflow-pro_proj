@@ -36,8 +36,7 @@ public class UserService {
     // }
 
     public User saveUserDetails(User user){
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     } 
 
     public List<User> getAllUsers(){
