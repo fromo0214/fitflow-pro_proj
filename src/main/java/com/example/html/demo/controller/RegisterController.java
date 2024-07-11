@@ -46,25 +46,19 @@ public class RegisterController {
         userService.saveUserDetails(user);
 
         // Authenticate the user upon registering
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), rawPassword);
         try {
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), rawPassword);
-            Authentication authentication = authenticationManager.authenticate(authToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authToken));
+            System.out.println("Authentication successful for user: " + user.getUsername());
         } catch (Exception e) {
-            // Log the error for further investigation
             e.printStackTrace();
-            // Handle authentication failure (e.g., redirect to an error page or show a message)
-            model.addAttribute("error", "Authentication failed after registration");
-            return "register";
+            System.out.println("Authentication failed for user: " + user.getUsername());
         }
 
-        // Using Thymeleaf templating here to display the user details on the front-end
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("currentWeight", user.getCurrentWeight());
-        model.addAttribute("goalWeight", user.getGoalWeight());
-        model.addAttribute("experienceLevel", user.getExperienceLevel());
+        System.out.println("Current user: " + SecurityContextHolder.getContext().getAuthentication().getName());
 
-        return "redirect:/home";
+
+        return "redirect:/login?registered=true";
     }
 }
 

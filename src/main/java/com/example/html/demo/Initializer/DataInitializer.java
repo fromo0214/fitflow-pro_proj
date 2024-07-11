@@ -3,6 +3,7 @@ package com.example.html.demo.Initializer;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.html.demo.model.User;
@@ -27,6 +28,9 @@ public class DataInitializer {
 
     @Autowired
     private WorkoutRoutineService workoutRoutineService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private RatingService ratingService;
@@ -95,19 +99,19 @@ public class DataInitializer {
     }
 
        public void initializeUsers(){
-        User user1 = new User("test1", "hello@gmail.com", "test", 5.0);
+        User user1 = new User("test1", "hello1@gmail.com", passwordEncoder.encode("test"), 5.0);
         userService.saveUserDetails(user1);
 
-        User user2 = new User("test2", "hello@gmail.com", "test", 5.0);
+        User user2 = new User("test2", "hello2@gmail.com", passwordEncoder.encode("test"), 5.0);
         userService.saveUserDetails(user2);
 
-        User user3 = new User("test3", "hello@gmail.com", "test", 4.0);
+        User user3 = new User("test3", "hello3@gmail.com", passwordEncoder.encode("test"), 4.0);
         userService.saveUserDetails(user3);
 
-        User user4 = new User("test4", "hello@gmail.com", "test", 5.0);
+        User user4 = new User("test4", "hello4@gmail.com", passwordEncoder.encode("test"), 5.0);
         userService.saveUserDetails(user4);
 
-        User user5 = new User("test5", "hello@gmail.com", "test", 2.0);
+        User user5 = new User("test5", "hello5@gmail.com", passwordEncoder.encode("test"), 2.0);
         userService.saveUserDetails(user5);
     }
 
