@@ -1,35 +1,69 @@
 package com.example.html.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.html.demo.model.User;
 import com.example.html.demo.repository.UserRepository;
 
-
 @Controller
 public class HomeController {
 
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/home")
-    public String home(Model model){
-        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // User user = (User) auth.getPrincipal();
-        // model.addAttribute("username", user.getUsername());
-        // model.addAttribute("currentWeight", user.getCurrentWeight());
-        // model.addAttribute("goalWeight", user.getGoalWeight());
-        // model.addAttribute("experienceLevel", user.getExperienceLevel());
-        return "home";
+    public String home(Model model) {
+
+    // Authorities or roles represent the permissions granted to the authenticated user.
+    // These are used to restrict access to certain parts of the application based on the user's role.
+
+    // (Authentication) the authentication objects holds the auth token and details of the user, including their authorities
+    //                  when a user logins spring security creates an authentication object and stores it in SecurityContextHolder
+
+    // (SecurityContextHolder) helper class provided by Spring Security to obtain the current security context
+        
+        //this line retrieves the current Authentication object from the 'SecurityContext'. 
+        //this includes details such as the username, pw, and granted authorities etc
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        //example structure of Authentication 
+        // Authentication {
+        //     principal: UserDetails { username, password, authorities },
+        //     credentials: [PROTECTED],
+        //     authorities: [ROLE_USER, ROLE_ADMIN],
+        //     details: WebAuthenticationDetails { remoteAddress, sessionId }
+        // }
+        
+
+        // Log authentication details for debugging
+        if (auth != null) {
+            System.out.println("Authentication Details: " + auth);
+        }
+    // (auth.getPrincipal()) returns the principal (authenticated user's representation) 
+    // (UserDetails) provides methods to get user information such as username, pssword, etc.
+        if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+            
+            //Details are fetch from the repository
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            User user = userRepository.findByUsername(userDetails.getUsername());
+
+
+            if (user != null) {
+                model.addAttribute("username", user.getUsername());
+                model.addAttribute("currentWeight", user.getCurrentWeight());
+                model.addAttribute("goalWeight", user.getGoalWeight());
+                model.addAttribute("experienceLevel", user.getExperienceLevel());
+                return "home";
+            }
+        }
+
+        // Handle the case where the user is not found or not authenticated
+        return "redirect:/login";  // Or show an error message
     }
-
 }
-

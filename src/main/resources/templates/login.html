@@ -4,11 +4,28 @@
     <meta charset="UTF-8">
     <meta name="author" content="Fernando Romo">
     <title>FitFlow Pro</title>
+    <script>
+        function showMessages(){
+            // used to parse the query string parameters from the current page's URL
+            //(window.location.search) returns the query string part of the current URL, which includes everything from
+            //                         the question mark onward
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if(urlParams.has('registered')){
+                alert("Registration Complete! Please login to continue.");
+            }
+            if(urlParams.has('logout')){
+                alert("You have been logged out successfully.")
+            }
+        }
+    </script>
+
+
     <link rel="icon" href="images/Flogo.png" type="images/png" />
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body onload="showMessages()">
     <header>
         <h2 class="logo">FitFlow Pro</h2>
         <nav class="navigation">

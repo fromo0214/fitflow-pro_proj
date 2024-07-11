@@ -44,7 +44,7 @@ public class SuggestedWorkoutsController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("suggested_workouts")
+    @PostMapping("/suggested_workouts")
     public String postMethodName(@RequestParam("userId") Long userId,
     @RequestParam("routineId") Long routineId,
     @RequestParam("rating") double ratingValue, Model model) {
@@ -64,20 +64,9 @@ public class SuggestedWorkoutsController {
         return "suggested_workouts";
     }
     
-    // @GetMapping("suggested_workouts")
-    // public String getSuggestedWorkouts(@RequestParam("userId") Long userId, Model model) {
-        
-    //     // Retrieve user and all workout routines
-    //     User user = userRepository.findByUserId(userId);
-    //     List<WorkoutRoutine> allRoutines = routineService.getAllRoutines();
-
-    //     // Generate recommendations for the hardcoded user
-    //     List<WorkoutRoutine> recommendations = recommendationService.getRecommendations(user, allRoutines, 1);
-
-    //     // Add recommendations to the model
-    //     model.addAttribute("recommendations", recommendations);
-
-    //     return "suggested_workouts";
-    // }
+    @GetMapping("/suggested_workouts")
+    public String getSuggestedWorkouts(@RequestParam("userId") Long userId, Model model) {
+        return "suggested_workouts";
+    }
     
 }

@@ -39,6 +39,8 @@ public class SecurityConfig{
             .permitAll() //allows all access to the url without authentication 
         )
         .logout((logout) -> logout //configures a log out functionality
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login?logout")
             .permitAll()
         )
         .csrf((csrf) -> csrf
