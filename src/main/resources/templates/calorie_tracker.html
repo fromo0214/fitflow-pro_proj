@@ -1,64 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calorie Tracker</title>
     <link rel="icon" href="images/Flogo.png" type="images/png" />
-  
     <link rel="stylesheet" href="css/workouts.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h2 class="logo">
-          FitFlow Pro</h2>
-          <nav class="navigation">
-          <a th:href="@{/home}">Home</a>  
-          <button class="btnLogin-popup">Profile</button>
+        <h2 class="logo">FitFlow Pro</h2>
+        <nav class="navigation">
+            <a th:href="@{/home}">Home</a>
+            <button class="btnLogin-popup">Log Out</button>
         </nav>
-      </header>
-
+    </header>
 
     <h1>Calorie Tracker</h1>
-    <form id="calorieForm">
+    <form id="calorieForm" th:action="@{/addMeal}" th:object="${meal}" method="post">
         <label for="meal">Meal:</label>
-        <input type="text" id="meal" name="meal">
+        <input type="text" id="meal" th:field="*{meal}" name="meal" required>
         <label for="calories">Calories:</label>
-        <input type="number" id="calories" name="calories">
-        <button type="button" onclick="addMeal()">Add Meal</button>
+        <input type="number" id="calories" th:field="*{calories}" name="calories" required>
+        <label for="mealType">Meal Type:</label>
+        <select id="mealType" th:field="*{mealType}" name="mealType" required>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+        </select>
+        <label for="date">Date:</label>
+        <input type="date" id="date" th:field="*{date}" name="date" required>
+        <button type="submit">Add Meal</button>
     </form>
     <div id="mealList">
         <h2>Meal List</h2>
-        <ul id="meals"></ul>
+        <ul id="meals" th:each="meal : ${meals}">
+            <li th:text="${meal.meal} + ' - ' + ${meal.calories} + ' calories (' + ${meal.mealType} + ')'"></li>
+        </ul>
     </div>
     <div id="totalCalories">
         <h2>Total Calories</h2>
-        <p id="total">0</p>
+        <p id="total" th:text="${totalCalories}">0</p>
     </div>
-
-    <script>
-        function addMeal() {
-            // Get meal and calories input values
-            var meal = document.getElementById("meal").value;
-            var calories = parseInt(document.getElementById("calories").value);
-
-            // Create list item to display meal
-            var li = document.createElement("li");
-            li.textContent = meal + " - " + calories + " calories";
-
-            // Append list item to meal list
-            document.getElementById("meals").appendChild(li);
-
-            // Update total calories
-            var totalElement = document.getElementById("total");
-            var currentTotal = parseInt(totalElement.textContent);
-            totalElement.textContent = currentTotal + calories;
-
-            // Clear input fields
-            document.getElementById("meal").value = "";
-            document.getElementById("calories").value = "";
-        }
-    </script>
 </body>
 </html>

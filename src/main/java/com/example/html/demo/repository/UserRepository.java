@@ -15,6 +15,9 @@ public interface UserRepository extends CrudRepository<User, Long>{
 
     User findByUsername(String username);
 
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
+
     @Query("SELECT u.experienceLevel FROM User u WHERE u.userId = :userId")
     List<Double> findExperienceLevelsByUserId(Long userId);
 }

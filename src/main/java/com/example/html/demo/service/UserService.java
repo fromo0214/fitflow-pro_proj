@@ -15,25 +15,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired WorkoutService workoutService;
+    @Autowired 
+    WorkoutService workoutService;
 
-    // public void initializeUsers(){
-    //     User user1 = new User("test1", "hello@gmail.com", "test", 5.0);
-    //     saveUserDetails(user1);
+    public boolean isUsernameTaken(String username){
+        return userRepository.existsByUsername(username);
+    }
 
-    //     User user2 = new User("test2", "hello@gmail.com", "test", 5.0);
-    //     saveUserDetails(user2);
-
-    //     User user3 = new User("test3", "hello@gmail.com", "test", 4.0);
-    //     saveUserDetails(user3);
-
-    //     User user4 = new User("test4", "hello@gmail.com", "test", 5.0);
-    //     saveUserDetails(user4);
-
-    //     User user5 = new User("test5", "hello@gmail.com", "test", 2.0);
-    //     saveUserDetails(user5);
-
-    // }
+    public boolean isEmailTaken(String email){
+        return userRepository.existsByEmail(email);
+    }
 
     public User saveUserDetails(User user){
         return userRepository.save(user);

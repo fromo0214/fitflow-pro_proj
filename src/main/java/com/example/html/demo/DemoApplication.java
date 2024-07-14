@@ -23,7 +23,8 @@ public class DemoApplication {
 		dataInitializer.initializeUsers();
 		dataInitializer.initializeWorkout();
 		dataInitializer.initializeWorkoutRoutines();;
-		dataInitializer.initializeRatings();		
+		dataInitializer.initializeRatings();
+		dataInitializer.initializeMeals();	
 	}
 
 }

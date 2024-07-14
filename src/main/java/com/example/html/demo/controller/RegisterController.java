@@ -35,6 +35,15 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, Model model) {
+
+        if(userService.isUsernameTaken(user.getUsername())){
+            model.addAttribute("usernameError", "Username is already taken.");
+        }
+
+        if(userService.isEmailTaken(user.getEmail())){
+            model.addAttribute("emailError", "Email is already registered.");
+        }
+
         System.out.println(user.toString());
 
         String rawPassword = user.getPassword();

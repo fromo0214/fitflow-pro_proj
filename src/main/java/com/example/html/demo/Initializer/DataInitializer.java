@@ -1,15 +1,18 @@
 package com.example.html.demo.Initializer;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.example.html.demo.model.Meal;
 import com.example.html.demo.model.User;
 import com.example.html.demo.model.Workout;
 import com.example.html.demo.model.WorkoutRoutine;
 import com.example.html.demo.repository.WorkoutRoutineRepository;
+import com.example.html.demo.service.MealService;
 import com.example.html.demo.service.RatingService;
 import com.example.html.demo.service.UserService;
 import com.example.html.demo.service.WorkoutService;
@@ -31,6 +34,9 @@ public class DataInitializer {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MealService mealService;
 
     @Autowired
     private RatingService ratingService;
@@ -158,4 +164,9 @@ public class DataInitializer {
         }
     }
 
+    public void initializeMeals(){
+        LocalDate date = LocalDate.now();
+        Meal meal1 = new Meal("hamburger", 800, "breakfast", date, "test1");
+        mealService.saveMeal(meal1);
+    }
 }
