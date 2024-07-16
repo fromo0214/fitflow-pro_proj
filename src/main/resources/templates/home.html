@@ -23,17 +23,17 @@
       </header>
 
 
-      <div class="information-features">
+      <div class="container">
 
       <h1 th:text="${username}">username</h1>
       <h2>Current Weight: <span th:text ="${currentWeight}">currentWeight</span></h2>
       <h2>Goal Weight: <span th:text ="${goalWeight}">goalWeight</span></h2>
       <h2>Experience Level: <span th:text ="${experienceLevel}">experienceLevel</span></h2>
       <h2>Welcome to the Home Page!</h2>
-    <h2>Features:</h2>
+    <h1>Features:</h1>
     <ul>
-        <li><a th:href="@{/workouts}">All workouts! Try these first before rating them!</a></li>
-        <li><a th:href="@{/rate_workouts}">Rate Workouts!</a></li>
+        <li><a th:href="@{/workouts}">Workout Exercises! Try these first exercises first.</a></li>
+        <li><a th:href="@{/rate_workouts}">Rate Workout Routines for a personalized insight.</a></li>
         <li><a th:href="@{/calorie_tracker}">Calorie Tracking!</a></li>
     </ul>
       </div>

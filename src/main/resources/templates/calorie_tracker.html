@@ -13,37 +13,62 @@
         <h2 class="logo">FitFlow Pro</h2>
         <nav class="navigation">
             <a th:href="@{/home}">Home</a>
-        <form th:action="@{/logout}" method="post" style="display: inline;">
-            <button class="btnLogin-popup">Log Out</button>
-        </form>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button class="btnLogin-popup">Log Out</button>
+            </form>
         </nav>
     </header>
 
-    <h1>Calorie Tracker</h1>
-    <form id="calorieForm" th:action="@{/addMeal}" th:object="${meal}" method="post">
-        <label for="meal">Meal:</label>
-        <input type="text" id="mealName" th:field="*{mealName}" name="mealName" required>
-        <label for="calories">Calories:</label>
-        <input type="number" id="calories" th:field="*{calories}" name="calories" required>
-        <label for="mealType">Meal Type:</label>
-        <select id="mealType" th:field="*{mealType}" name="mealType" required>
-            <option value="breakfast">Breakfast</option>
-            <option value="lunch">Lunch</option>
-            <option value="dinner">Dinner</option>
-        </select>
-        <label for="date">Date:</label>
-        <input type="date" id="date" th:field="*{date}" name="date" required>
-        <button type="submit">Add Meal</button>
-    </form>
-    <div id="mealList">
-        <h2>Meal List</h2>
-        <ul id="meals" th:each="meal : ${meals}">
-            <li th:text="${meal.mealName} + ' - ' + ${meal.calories} + ' calories (' + ${meal.mealType} + ')'"></li>
-        </ul>
+    <div class="container">
+        <h1>Calorie Tracker</h1>
+        <form id="calorieForm" th:action="@{/addMeal}" th:object="${meal}" method="post">
+            <label for="meal">Meal:</label>
+            <input type="text" id="mealName" th:field="*{mealName}" name="mealName" required>
+            <label for="calories">Calories:</label>
+            <input type="number" id="calories" th:field="*{calories}" name="calories" required>
+            <label for="mealType">Meal Type:</label>
+            <select id="mealType" th:field="*{mealType}" name="mealType" required>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+            </select>
+            <label for="date">Date:</label>
+            <input type="date" id="date" th:field="*{date}" name="date" required>
+            <button type="submit">Add Meal</button>
+        </form>
+        <div id="totalCalories">
+            <h1>Total Calories</h1>
+            <p id="total" th:text="${totalCalories}">0</p>
+        </div>
+
+        <div id="mealList">
+            <h1>Meal List</h1>
+            <div th:each="entry : ${groupedMeals}">
+                <h3 th:text="${entry.key}"></h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Meal</th>
+                            <th>Calories</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="meal : ${entry.value}">
+                            <td th:text="${meal.mealName}"></td>
+                            <td th:text="${meal.calories}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div id="totalCalories">
-        <h2>Total Calories</h2>
-        <p id="total" th:text="${totalCalories}">0</p>
-    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => { 
+            const dateInput = document.getElementById('date'); 
+            const today = new Date().toISOString().split('T')[0]; 
+            dateInput.value = today; 
+        });
+    </script>
 </body>
 </html>

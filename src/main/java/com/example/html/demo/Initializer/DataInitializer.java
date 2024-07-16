@@ -166,7 +166,7 @@ public class DataInitializer {
 
     public void initializeMeals(){
         LocalDate date = LocalDate.now();
-        Meal meal1 = new Meal("hamburger", 800, "breakfast", date, "test1");
+        Meal meal1 = new Meal("hamburger", 800, "Breakfast", date, "test1");
         mealService.saveMeal(meal1);
     }
 }

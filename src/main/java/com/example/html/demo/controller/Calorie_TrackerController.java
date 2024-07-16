@@ -3,6 +3,7 @@ package com.example.html.demo.controller;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +36,14 @@ public class Calorie_TrackerController {
 
 
         List<Meal> meals = mealService.getMealsByDateAndUsername(LocalDate.now(), username);
+        Map <String, List<Meal>> groupedMeals = mealService.groupMealsByMealType(meals);
+
+
         int totalCalories = meals.stream().mapToInt(Meal::getCalories).sum();
 
+
         model.addAttribute("meal", new Meal()); //adds the meal
-        model.addAttribute("meals", meals); // displays list of meals
+        model.addAttribute("groupedMeals", groupedMeals); // displays list of meals grouped by type
         model.addAttribute("totalCalories", totalCalories); //displays total calories 
       
 

@@ -13,17 +13,17 @@ body{
     background-size: cover;
     background-position: center;
 } 
-.information-features{
-    margin-left: 20px;
-}
 
+.container {
+    margin-left: 20px; /* Adjust this value as needed */
+    padding: 20px;
+}
 
 :root{
-        --bg-color:#222327;
-        --text-color:#fff;
-        --main-color: #0f3052;
+    --bg-color:#222327;
+    --text-color:#fff;
+    --main-color: #0f3052;
 }
-
 
 header{
     position: fixed;
@@ -119,4 +119,3 @@ th {
 tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 } 
-
