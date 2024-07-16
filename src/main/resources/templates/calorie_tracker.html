@@ -13,14 +13,16 @@
         <h2 class="logo">FitFlow Pro</h2>
         <nav class="navigation">
             <a th:href="@{/home}">Home</a>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
             <button class="btnLogin-popup">Log Out</button>
+        </form>
         </nav>
     </header>
 
     <h1>Calorie Tracker</h1>
     <form id="calorieForm" th:action="@{/addMeal}" th:object="${meal}" method="post">
         <label for="meal">Meal:</label>
-        <input type="text" id="meal" th:field="*{meal}" name="meal" required>
+        <input type="text" id="mealName" th:field="*{mealName}" name="mealName" required>
         <label for="calories">Calories:</label>
         <input type="number" id="calories" th:field="*{calories}" name="calories" required>
         <label for="mealType">Meal Type:</label>
@@ -36,7 +38,7 @@
     <div id="mealList">
         <h2>Meal List</h2>
         <ul id="meals" th:each="meal : ${meals}">
-            <li th:text="${meal.meal} + ' - ' + ${meal.calories} + ' calories (' + ${meal.mealType} + ')'"></li>
+            <li th:text="${meal.mealName} + ' - ' + ${meal.calories} + ' calories (' + ${meal.mealType} + ')'"></li>
         </ul>
     </div>
     <div id="totalCalories">

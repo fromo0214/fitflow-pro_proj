@@ -14,8 +14,10 @@
           FitFlow Pro</h2>
           <nav class="navigation">
           <a th:href="@{/home}">Home</a>  
-          <button class="btnLogin-popup">Profile</button>
-        </nav>
+          <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button class="btnLogin-popup">Log Out</button>
+        </form>        
+    </nav>
     </header>
 
     <h1>Suggested Workouts</h1>

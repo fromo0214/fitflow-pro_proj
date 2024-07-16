@@ -1,5 +1,6 @@
 package com.example.html.demo.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,31 +22,27 @@ import com.example.html.demo.service.MealService;
 @Controller
 public class Calorie_TrackerController {
 
-    private static final Logger logger = LoggerFactory.getLogger(Calorie_TrackerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(Calorie_TrackerController.class); //for debugging
 
     @Autowired
     private MealService mealService;
 
     @GetMapping("/calorie_tracker")
-    public String calorieTracker(@RequestParam(required = false) LocalDate date, Model model) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
-
+    public String calorieTracker(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        logger.debug("Fetching meals for user: {} on date: {}", username, date);
+        logger.debug("Fetching meals for user: {} on date: {}", username, LocalDate.now());
 
 
-        List<Meal> meals = mealService.getMealsByDateAndUsername(date, username);
+        List<Meal> meals = mealService.getMealsByDateAndUsername(LocalDate.now(), username);
         int totalCalories = meals.stream().mapToInt(Meal::getCalories).sum();
 
-        model.addAttribute("meals", meals);
-        model.addAttribute("totalCalories", totalCalories);
-        model.addAttribute("date", date);
-        model.addAttribute("meal", new Meal());
+        model.addAttribute("meal", new Meal()); //adds the meal
+        model.addAttribute("meals", meals); // displays list of meals
+        model.addAttribute("totalCalories", totalCalories); //displays total calories 
+      
 
-        logger.debug("Total calories for date {}: {}", date, totalCalories);
+        logger.debug("Total calories for date {}: {}", LocalDate.now(), totalCalories);
         return "calorie_tracker";
     }
 
@@ -58,6 +55,6 @@ public class Calorie_TrackerController {
         
         mealService.saveMeal(meal);
         logger.debug("Meal saved successfully: {}", meal);
-        return "redirect:/calorie_tracker?date=" + meal.getDate();
+        return "redirect:/calorie_tracker";
     }
 }

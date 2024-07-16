@@ -3,8 +3,6 @@ package com.example.html.demo.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
@@ -12,9 +10,7 @@ public class Meal {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String meal;
+    private String mealName;
     private int calories;
     private String mealType; //breakfast, lunch, and dinner
     private LocalDate date;
@@ -24,29 +20,19 @@ public class Meal {
 
     }
 
-    
-    
-    public Meal(String meal, int calories, String mealType, LocalDate date, String username) {
-        this.meal = meal;
+    public Meal(String mealName, int calories, String mealType, LocalDate date, String username) {
+        this.mealName = mealName;
         this.calories = calories;
         this.mealType = mealType;
         this.date = date;
         this.username = username;
     }
-
-
-
-    public Long getId() {
-        return id;
+   
+    public String getMealName() {
+        return mealName;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getMeal() {
-        return meal;
-    }
-    public void setMeal(String meal) {
-        this.meal = meal;
+    public void setMealName(String mealName) {
+        this.mealName = mealName;
     }
     public int getCalories() {
         return calories;
@@ -72,8 +58,4 @@ public class Meal {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    
-
-    
 }
