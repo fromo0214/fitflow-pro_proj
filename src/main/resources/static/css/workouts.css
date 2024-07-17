@@ -119,3 +119,18 @@ th {
 tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 } 
+
+.text-content{
+    flex: 1;
+}
+
+.random-image-container {
+    flex: 0 0 auto;
+    margin-bottom: 1000px;
+    margin-left: 800px;
+}
+
+.random-image-container img {
+    max-width: 500px; /* Adjust this value as needed */
+    height: auto;
+}

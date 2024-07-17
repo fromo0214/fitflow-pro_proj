@@ -1,5 +1,7 @@
 package com.example.html.demo.service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,13 @@ public class UserService {
 
     public List<User> getAllUsers(){
         return  (List<User>) userRepository.findAll(); 
+    }
+
+    public int calculateAge(LocalDate dob) {
+        if (dob == null) {
+            dob = LocalDate.of(2002, 2, 14);
+        }
+        return Period.between(dob, LocalDate.now()).getYears();
     }
 
     

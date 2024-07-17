@@ -10,12 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.html.demo.model.User;
 import com.example.html.demo.repository.UserRepository;
+import com.example.html.demo.service.ImageService;
+import com.example.html.demo.service.UserService;
 
 @Controller
 public class HomeController {
 
     @Autowired
+    private ImageService imageService;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -53,12 +61,18 @@ public class HomeController {
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
             User user = userRepository.findByUsername(userDetails.getUsername());
 
+            int age = userService.calculateAge(user.getDob());
+
+            String randomImage = imageService.getRandomImage();
+
 
             if (user != null) {
                 model.addAttribute("username", user.getUsername());
+                model.addAttribute("age", age);
                 model.addAttribute("currentWeight", user.getCurrentWeight());
                 model.addAttribute("goalWeight", user.getGoalWeight());
                 model.addAttribute("experienceLevel", user.getExperienceLevel());
+                model.addAttribute("randomImage", randomImage);
                 return "home";
             }
         }

@@ -1,5 +1,6 @@
 package com.example.html.demo.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class User {
     private String gender;
 
     @Column(name = "birth_date")
-    private String dob;
+    private LocalDate dob;
 
     @Column(name = "starting_weight")
     private int startWeight;
@@ -115,10 +116,10 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    public String getDob() {
+    public LocalDate getDob() {
         return dob;
     }
-    public void setDob(String dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
     public int getStartWeight() {

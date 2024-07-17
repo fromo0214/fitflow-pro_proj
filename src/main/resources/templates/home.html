@@ -22,10 +22,10 @@
         </nav>
       </header>
 
-
       <div class="container">
 
       <h1 th:text="${username}">username</h1>
+      <h2>Age: <span th:text ="${age}">age</span></h2>
       <h2>Current Weight: <span th:text ="${currentWeight}">currentWeight</span></h2>
       <h2>Goal Weight: <span th:text ="${goalWeight}">goalWeight</span></h2>
       <h2>Experience Level: <span th:text ="${experienceLevel}">experienceLevel</span></h2>
@@ -36,6 +36,10 @@
         <li><a th:href="@{/rate_workouts}">Rate Workout Routines for a personalized insight.</a></li>
         <li><a th:href="@{/calorie_tracker}">Calorie Tracking!</a></li>
     </ul>
+
+    <div class="random-image-container">
+      <img th:src="@{'/images/' + ${randomImage}}" alt="Random Image" />
+  </div>
       </div>
 
 </body>
