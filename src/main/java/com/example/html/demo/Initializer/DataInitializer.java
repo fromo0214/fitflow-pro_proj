@@ -119,6 +119,10 @@ public class DataInitializer {
 
         User user5 = new User("test5", "hello5@gmail.com", passwordEncoder.encode("test"), 2.0);
         userService.saveUserDetails(user5);
+
+        User user6 = new User("fromo0214", "faromo0214@gmail.com", passwordEncoder.encode("test"), 72.0, 
+        150.0, 188.0, 200.0, 8.0);
+        userService.saveUserDetails(user6);
     }
 
      public void initializeWorkoutRoutines() {

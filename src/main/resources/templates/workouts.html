@@ -20,7 +20,7 @@
         </nav>
       </header>
 
-    <h1>All Workouts</h1>
+    <h1>All Workouts (Sorted by Muscle Group)</h1>
     <div th:each="entry : ${groupedWorkouts}">
         <h2 th:text="${entry.key}"></h2>
         <table>

@@ -32,7 +32,7 @@ public class User {
     private String password;
 
     @Column(name = "height")
-    private String height;
+    private double height;
 
     @Column(name = "gender")
     private String gender;
@@ -41,13 +41,13 @@ public class User {
     private LocalDate dob;
 
     @Column(name = "starting_weight")
-    private int startWeight;
+    private double startWeight;
 
     @Column(name = "current_weight")
-    private int currentWeight;
+    private double currentWeight;
 
     @Column(name = "goal_weight")
-    private int goalWeight;
+    private double goalWeight;
 
     @Column(name = "experience_level")
     private Double experienceLevel;
@@ -71,7 +71,21 @@ public class User {
         this.experienceLevel = experienceLevel;
     }
 
-      public void rateWorkoutRoutine(WorkoutRoutine routine, double ratingValue) {
+    
+
+      public User(String username, String email, String password, double height, double startWeight, double currentWeight,
+            double goalWeight, Double experienceLevel) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.height = height;
+        this.startWeight = startWeight;
+        this.currentWeight = currentWeight;
+        this.goalWeight = goalWeight;
+        this.experienceLevel = experienceLevel;
+    }
+
+    public void rateWorkoutRoutine(WorkoutRoutine routine, double ratingValue) {
         Rating rating = new Rating();
         rating.setUser(this);
         rating.setWorkoutRoutine(routine);
@@ -104,10 +118,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getHeight() {
+    public double getHeight() {
         return height;
     }
-    public void setHeight(String height) {
+    public void setHeight(double height) {
         this.height = height;
     }
     public String getGender() {
@@ -122,22 +136,22 @@ public class User {
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
-    public int getStartWeight() {
+    public double getStartWeight() {
         return startWeight;
     }
-    public void setStartWeight(int startWeight) {
+    public void setStartWeight(double startWeight) {
         this.startWeight = startWeight;
     }
-    public int getCurrentWeight() {
+    public double getCurrentWeight() {
         return currentWeight;
     }
-    public void setCurrentWeight(int currentWeight) {
+    public void setCurrentWeight(double currentWeight) {
         this.currentWeight = currentWeight;
     }
-    public int getGoalWeight() {
+    public double getGoalWeight() {
         return goalWeight;
     }
-    public void setGoalWeight(int goalWeight) {
+    public void setGoalWeight(double goalWeight) {
         this.goalWeight = goalWeight;
     }
     public Double getExperienceLevel() {

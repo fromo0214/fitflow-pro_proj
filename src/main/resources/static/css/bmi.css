@@ -1,63 +1,68 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-} 
- 
-body{
+}
+
+body {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     min-height: 100vh;
     background-color: var(--text-color);
     background-size: cover;
     background-position: center;
-} 
-
-.container {
-    margin-left: 20px; /* Adjust this value as needed */
-    padding: 20px;
 }
 
-:root{
-    --bg-color:#222327;
-    --text-color:#fff;
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    padding-top: 80px; /* Add padding to the top to prevent content from being covered by the header */
+}
+
+:root {
+    --bg-color: #222327;
+    --text-color: #fff;
     --main-color: #0f3052;
 }
 
-header{
+header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 10px 100px; 
+    padding: 10px 100px;
     background: var(--main-color);
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     z-index: 999;
 }
 
-h1{
-    margin-top: 70px;
+h1 {
+    margin-top: 20px; /* Adjust margin if needed */
 }
 
-.logo{
+.logo {
     font-size: 2em;
     color: var(--text-color);
     user-select: none;
 }
 
-.navigation a{
+.navigation a {
     position: relative;
     font-size: 1.1em;
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
-    margin-left: 40px; 
+    margin-left: 40px;
 }
 
-.navigation a::after{
+.navigation a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -71,12 +76,12 @@ h1{
     transition: transform .5s;
 }
 
-.navigation a:hover::after{
+.navigation a:hover::after {
     transform-origin: left;
     transform: scaleX(1);
 }
 
-.navigation .btnLogin-popup{
+.navigation .btnLogin-popup {
     width: 130px;
     height: 50px;
     background: transparent;
@@ -91,56 +96,27 @@ h1{
     transition: .5s;
 }
 
-.navigation .btnLogin-popup:hover{
+.navigation .btnLogin-popup:hover {
     background: var(--text-color);
     color: var(--main-color);
 }
 
-table {
-    top: 10px;
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    top: 10px;
-    padding: 15px;
-    text-align: left;
-    margin-top: 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    margin-left: 20px;
-    margin-top: 30px;
-    background-color: #f2f2f2;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-} 
-
-.text-content{
+.text-content {
     flex: 1;
-}
-
-.random-image-container {
-    flex: 0 0 auto;
-    margin-top: 200px;
-    margin-left: 800px;
-}
-
-.random-image-container img {
-    max-width: 500px; /* Adjust this value as needed */
-    height: auto;
 }
 
 .chart-container {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Center the chart horizontally */
     align-items: center;
-    width: 100%; /* Ensure the container takes full width */
-    height: auto; /* Ensure the container takes full height */
-    margin-top: 20px; /* Add some margin if needed */
-    text-align: center;
+    width: 100%;
+    height: 500px;
+    margin-top: 20px;
+    position: relative;
+    margin-left: 150px; /* Adjust this value to move the chart more to the right */
+}
+
+#bmi_chart {
+    width: 600px;
+    height: 300px;
 }
