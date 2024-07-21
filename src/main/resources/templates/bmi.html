@@ -32,12 +32,28 @@
                    minorTicks: 5,
                    max: 35,
                    min: 10,
-                   majorTicks: ['10', '15', '20', '25', '30', '35']
+                   majorTicks: ['10', '15', '20', '25', '30', '35'],
+                   animation: {
+                        duration: 1000,
+                        easing: 'out'
+                   }
                };
-   
+               
                var chart = new google.visualization.Gauge(document.getElementById('bmi_chart'));
    
-               chart.draw(data, options);
+               function animateGauge(){
+                var currentValue = 0;
+                var interval = setInterval(function(){
+                    currentValue += 0.1;
+                    data.setValue(0, 1, currentValue);
+                    chart.draw(data, options);
+                    if(currentValue >= bmi){
+                        clearInterval(interval);
+                    }
+                }, 30);
+               }
+
+               animateGauge();
            }
        </script>
 </head>

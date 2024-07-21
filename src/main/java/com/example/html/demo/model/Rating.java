@@ -76,6 +76,5 @@ public class Rating {
         return ratingId;
     }
     
-
     
 }

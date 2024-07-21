@@ -1,26 +1,25 @@
 package com.example.html.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.html.demo.model.User;
-import com.example.html.demo.model.Workout;
 import com.example.html.demo.model.WorkoutRoutine;
 import com.example.html.demo.repository.UserRepository;
 import com.example.html.demo.service.RatingService;
 import com.example.html.demo.service.RecommendationService;
 import com.example.html.demo.service.UserService;
 import com.example.html.demo.service.WorkoutRoutineService;
-import com.example.html.demo.service.WorkoutService;
-
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 @Controller
@@ -28,9 +27,6 @@ public class SuggestedWorkoutsController {
 
     @Autowired
     private RatingService ratingService;
-
-    @Autowired
-    private WorkoutService workoutService;
 
     @Autowired
     private UserRepository userRepository;
@@ -45,27 +41,39 @@ public class SuggestedWorkoutsController {
     private UserService userService;
 
     @PostMapping("/suggested_workouts")
-    public String postMethodName(@RequestParam("userId") Long userId,
-    @RequestParam("routineId") Long routineId,
-    @RequestParam("rating") double ratingValue, Model model) {
-        User user = userRepository.findByUserId(userId);
-        WorkoutRoutine workoutRoutine = routineService.findById(routineId);
-        
-        ratingService.saveRating(user, workoutRoutine, ratingValue);
-              // Retrieve user and all workout routines
-              List<WorkoutRoutine> allRoutines = routineService.getAllRoutines();
-      
-              // Generate recommendations for the hardcoded user
-              List<WorkoutRoutine> recommendations = recommendationService.getRecommendations(user, allRoutines, 1);
-      
-              // Add recommendations to the model
-              model.addAttribute("recommendations", recommendations);
+    public String postMethodName(@RequestParam Map<String, String> allRequestParams, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        String username = userDetails.getUsername();
+        User user = userRepository.findByUsername(username);
+
+        // Process the ratings
+        allRequestParams.entrySet().stream()
+            .filter(entry -> entry.getKey().startsWith("ratings[") && entry.getKey().endsWith("].rating"))
+            .forEach(entry -> {
+                String key = entry.getKey();
+                String index = key.substring(key.indexOf('[') + 1, key.indexOf(']'));
+                Long routineId = Long.parseLong(allRequestParams.get("ratings[" + index + "].routineId"));
+                double ratingValue = Double.parseDouble(entry.getValue());
+                
+                WorkoutRoutine workoutRoutine = routineService.findById(routineId);
+                ratingService.saveRating(user, workoutRoutine, ratingValue);
+            });
+
+        // Retrieve user and all workout routines
+        List<WorkoutRoutine> allRoutines = routineService.getAllRoutines();
+
+        // Generate recommendations for the user
+        List<WorkoutRoutine> recommendations = recommendationService.getRecommendations(user, allRoutines, 1);
+
+        // Add recommendations to the model
+        model.addAttribute("recommendations", recommendations);
 
         return "suggested_workouts";
     }
-    
+
     @GetMapping("/suggested_workouts")
-    public String getSuggestedWorkouts(@RequestParam("userId") Long userId, Model model) {
+    public String getMethodName() {
         return "suggested_workouts";
     }
     
