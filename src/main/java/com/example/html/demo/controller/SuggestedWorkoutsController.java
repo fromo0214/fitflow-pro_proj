@@ -64,7 +64,7 @@ public class SuggestedWorkoutsController {
         List<WorkoutRoutine> allRoutines = routineService.getAllRoutines();
 
         // Generate recommendations for the user
-        List<WorkoutRoutine> recommendations = recommendationService.getRecommendations(user, allRoutines, 1);
+        List<WorkoutRoutine> recommendations = recommendationService.getRecommendations(user, allRoutines, 5);
 
         // Add recommendations to the model
         model.addAttribute("recommendations", recommendations);

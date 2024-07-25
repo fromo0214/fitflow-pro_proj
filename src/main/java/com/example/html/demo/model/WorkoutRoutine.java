@@ -28,15 +28,21 @@ public class WorkoutRoutine {
     @OneToMany
     private List<Workout> workouts;
 
+    @Column(name = "category")
+    private String category;
+
     
-    public WorkoutRoutine(Long routineId, String name, List<Workout> workouts) {
+    public WorkoutRoutine(Long routineId, String name, List<Workout> workouts, String category) {
         this.routineId = routineId;
         this.name = name;
         this.workouts = workouts;
+        this.category = category;
     }
 
     public WorkoutRoutine() {
     }
+
+    
 
     public String getName() {
         return name;
@@ -79,6 +85,14 @@ public class WorkoutRoutine {
 
     public double getPredictedRating(){
         return predictedRating;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
     
 }

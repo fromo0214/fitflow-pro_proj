@@ -60,14 +60,22 @@ public List<WorkoutRoutine> getRecommendations(User user, List<WorkoutRoutine> a
         routineAverageRating.put(routine, averageRating);
     }
 
-    // Sort the routines by their average rating in descending order
-    List<WorkoutRoutine> recommendations = routineAverageRating.entrySet().stream()
-                                            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                                            .map(Map.Entry::getKey)
-                                            .limit(limit)
-                                            .collect(Collectors.toList());
+   // Sort the routines by their average rating in descending order
+   List<WorkoutRoutine> sortedRoutines = routineAverageRating.entrySet().stream()
+   .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+   .map(Map.Entry::getKey)
+   .collect(Collectors.toList());
 
-    return recommendations;
+// Ensure only one routine per category
+Map<String, WorkoutRoutine> categoryToRoutine = new HashMap<>();
+for (WorkoutRoutine routine : sortedRoutines) {
+categoryToRoutine.putIfAbsent(routine.getCategory(), routine);
+if (categoryToRoutine.size() >= limit) {
+   break;
+}
+}
+
+return categoryToRoutine.values().stream().collect(Collectors.toList());
 }
 
 }

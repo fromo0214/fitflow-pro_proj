@@ -15,4 +15,6 @@ public interface WorkoutRepository extends CrudRepository<Workout, Long>{
 
     @Query("SELECT w.difficultyRating FROM Workout w")
     List<Double> findDifficultyRatings();
+
+    Workout findByWorkoutId(Long workoutId);
 }
