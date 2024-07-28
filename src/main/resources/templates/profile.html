@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <script>
+        function showMessages(){
+            // used to parse the query string parameters from the current page's URL
+            //(window.location.search) returns the query string part of the current URL, which includes everything from
+            //                         the question mark onward
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if(urlParams.has('username')){
+                alert("Updated profile successfully!");
+            }
+        }
+    </script>
+    <link rel="icon" href="images/Flogo.png" type="images/png" />
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+</head>
+<body onload="showMessages()">
+
+    <header>
+        <h2 class="logo">FitFlow Pro</h2>
+        <nav class="navigation">
+            <a th:href="@{/home}">Home</a>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button class="btnLogin-popup">Log Out</button>
+            </form>
+        </nav>
+    </header>
+
+    <div class="form-box login">
+    <h1>Profile Information</h1> 
+    <form th:action="@{/profile}" th:object="${user}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{userId}" />
+        <input type="hidden" th:field="*{username}" />
+        <div class="input-box">
+            <input type="email" id="email" th:field="*{email}" />
+            <label for="email">Email:</label>
+
+        </div>
+        <div class="input-box">
+            <input type="password" id="password" th:field="*{password}" />
+            <label for="password">Password:</label>
+
+        </div>
+        <div class="input-box">
+            <input type="text" id="height" th:field="*{height}" />
+            <label for="height">Height (inches):</label>
+
+        </div>
+        <div>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" th:field="*{gender}">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div>
+            <label for="dob">Birth Date:</label>
+            <input type="date" id="dob" th:field="*{dob}" />
+        </div>
+        <div class="input-box">
+            <input type="text" id="startWeight" th:field="*{startWeight}" />
+            <label for="startWeight">Starting Weight (lbs):</label>
+
+        </div>
+        <div class="input-box">
+            <input type="text" id="currentWeight" th:field="*{currentWeight}" />
+            <label for="currentWeight">Current Weight (lbs):</label>
+
+        </div>
+        <div class="input-box">
+            <input type="text" id="goalWeight" th:field="*{goalWeight}" />
+            <label for="goalWeight">Goal Weight (lbs):</label>
+
+        </div>
+        <div class="input-box">
+            <input type="text" id="experienceLevel" th:field="*{experienceLevel}" min="1" max="10"/>
+            <label for="experienceLevel">Experience Level:</label>
+
+        </div>
+        <button type="submit" class="btn">Update Profile</button>
+    </form>
+</div>
+
+</body>
+</html>

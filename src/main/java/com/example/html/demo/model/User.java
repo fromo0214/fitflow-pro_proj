@@ -52,8 +52,12 @@ public class User {
     @Column(name = "experience_level")
     private Double experienceLevel;
 
+    @Column(name = "profile_picture")
+    private String profilePicture;
+
     @OneToMany
     private List<Rating> ratedRoutines;
+
 
     // private boolean accountNonExpired;
     // private boolean accountNonLocked;
@@ -95,6 +99,8 @@ public class User {
         }
         ratedRoutines.add(rating);
     }
+
+    
 
     public Long getUserId(){
         return userId;
@@ -179,6 +185,14 @@ public class User {
 
     public void setRatedRoutines(List<Rating> ratedRoutines) {
         this.ratedRoutines = ratedRoutines;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     // public boolean isAccountNonExpired() {

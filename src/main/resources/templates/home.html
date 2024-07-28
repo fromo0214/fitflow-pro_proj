@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Page</title>
+    <title>Home</title>
     <link rel="icon" href="images/Flogo.png" type="images/png" />
     <link rel="stylesheet" href="css/home.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
@@ -14,8 +14,8 @@
         <h2 class="logo">FitFlow Pro</h2>
         <nav class="navigation">
             <a th:href="@{/home}">Home</a>
-            <form th:action="@{/logout}" method="post" style="display: inline;">
-                <button class="btnLogin-popup">Log Out</button>
+            <form th:action="@{/profile}" method="get" style="display: inline;">
+                <button type="submit" class="btnLogin-popup">Profile</button>
             </form>
         </nav>
     </header>
