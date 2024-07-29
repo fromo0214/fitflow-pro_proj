@@ -71,14 +71,17 @@ public class HomeController {
 
             int age = userService.calculateAge(user.getDob());
 
+
             String randomImage = imageService.getRandomImage();
 
 
             if (user != null) {
                 model.addAttribute("username", user.getUsername());
                 model.addAttribute("age", age);
+                model.addAttribute("startWeight", user.getStartWeight());
                 model.addAttribute("currentWeight", user.getCurrentWeight());
                 model.addAttribute("goalWeight", user.getGoalWeight());
+                model.addAttribute("weightChange", user.getWeightChange());
                 model.addAttribute("experienceLevel", user.getExperienceLevel());
                 model.addAttribute("activityCategory", activityCategory);
                 model.addAttribute("randomImage", randomImage);

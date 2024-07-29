@@ -32,7 +32,7 @@
         </nav>
     </header>
 
-    <div class="form-box login">
+    <div class="profile-container">
     <h1>Profile Information</h1> 
     <form th:action="@{/profile}" th:object="${user}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{userId}" />
@@ -85,7 +85,10 @@
         </div>
         <button type="submit" class="btn">Update Profile</button>
     </form>
+    <h2>Weight Change:</h2>
+    <p th:text="${weightChange}">0</p>
 </div>
+   
 
 </body>
 </html>

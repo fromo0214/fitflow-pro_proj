@@ -33,17 +33,17 @@
                 <option value="Dinner">Dinner</option>
             </select>
             <label for="date">Date:</label>
-            <input type="date" id="date" th:field="*{date}" name="date" required>
-            <button type="submit">Add Meal</button>
+            <input type="date" id="date" th:field="*{date}" name="date" th:value="${selectedDate}" required>
+            <button type="submit" class="btn">Add Meal</button>
         </form>
         <div id="totalCalories">
-            <h1>Calorie Overview</h1>
+            <h1>Calorie Overview - <span th:text="${calorieMessage}"></span></h1>
             <p>Total Calories: <span id="total" th:text="${totalCalories}">0</span></p>
             <p>Recommended Daily Intake: <span th:text="${formattedCalorieIntake}">0</span> (1 lb a week)</p>
         </div>
 
         <div id="mealList">
-            <h1>Meal List</h1>
+            <h1>Meal List for <span th:text="${selectedDate}"></span></h1>
             <div th:each="entry : ${groupedMeals}">
                 <h3 th:text="${entry.key}"></h3>
                 <table>
@@ -62,13 +62,26 @@
                 </table>
             </div>
         </div>
+
+        <div class="navigation-buttons">
+            <form th:action="@{/calorie_tracker}" method="get">
+                <input type="hidden" name="date" th:value="${previousDay}"/>
+                <button type="submit" class="btn">Previous Day</button>
+            </form>
+            <form th:action="@{/calorie_tracker}" method="get">
+                <input type="hidden" name="date" th:value="${nextDay}"/>
+                <button type="submit" class="btn">Next Day</button>
+            </form>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => { 
             const dateInput = document.getElementById('date'); 
             const today = new Date().toISOString().split('T')[0]; 
-            dateInput.value = today; 
+            if (!dateInput.value) {
+                dateInput.value = today; 
+            }
         });
     </script>
 </body>

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.html.demo.model.User;
 import com.example.html.demo.repository.UserRepository;
 import com.example.html.demo.service.ImageService;
+import com.example.html.demo.service.UserService;
 
 
 
@@ -37,14 +38,20 @@ public class ProfileController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/profile")
     public String showProfile(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String username = userDetails.getUsername();
         User user = userRepository.findByUsername(username);
+        
 
         model.addAttribute("user", user);
+        model.addAttribute("weightChange", user.getWeightChange());
+
 
         return "profile";
     }
@@ -53,8 +60,15 @@ public class ProfileController {
     @PostMapping("/profile")
     public String updateProfile(@ModelAttribute User user) {
         //TODO: process POST request
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User existingUser = userRepository.findByUsername(userDetails.getUsername());
+        double weightChange = userService.calculateWeightChange(existingUser.getCurrentWeight(), user.getCurrentWeight());
+
+        user.setWeightChange(weightChange);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
         return "redirect:/profile?username=" + user.getUsername();
     
         }

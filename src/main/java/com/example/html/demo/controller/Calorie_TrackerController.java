@@ -1,6 +1,5 @@
 package com.example.html.demo.controller;
 
-import java.security.Principal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -46,12 +45,16 @@ public class Calorie_TrackerController {
     private UserService userService;
 
     @GetMapping("/calorie_tracker")
-    public String calorieTracker(Model model) {
+    public String calorieTracker(@RequestParam(value = "date", required = false) String dateStr, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String username = userDetails.getUsername();
 
-        User user = userRepository.findByUsername(username); 
+        User user = userRepository.findByUsername(username);
+
+        LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr) : LocalDate.now();
+        LocalDate previousDay = date.minusDays(1);
+        LocalDate nextDay = date.plusDays(1);
 
         int age = userService.calculateAge(user.getDob());
 
@@ -63,20 +66,23 @@ public class Calorie_TrackerController {
 
         String formattedCalorieIntake = INTEGER_FORMAT.format(calorieIntake);
 
-        List<Meal> meals = mealService.getMealsByDateAndUsername(LocalDate.now(), username);
-        Map <String, List<Meal>> groupedMeals = mealService.groupMealsByMealType(meals);
+        String calorieMessage = calorieService.calorieMessage(user.getCurrentWeight(), user.getGoalWeight());
 
-        
+        List<Meal> meals = mealService.getMealsByDateAndUsername(date, username);
+        Map<String, List<Meal>> groupedMeals = mealService.groupMealsByMealType(meals);
+
         int totalCalories = meals.stream().mapToInt(Meal::getCalories).sum();
-
 
         model.addAttribute("meal", new Meal()); //adds the meal
         model.addAttribute("groupedMeals", groupedMeals); // displays list of meals grouped by type
         model.addAttribute("totalCalories", totalCalories); //displays total calories
         model.addAttribute("formattedCalorieIntake", formattedCalorieIntake); //displays calorie intake
-      
+        model.addAttribute("calorieMessage", calorieMessage);
+        model.addAttribute("previousDay", previousDay.toString());
+        model.addAttribute("nextDay", nextDay.toString());
+        model.addAttribute("selectedDate", date);
 
-        logger.debug("Total calories for date {}: {}", LocalDate.now(), totalCalories);
+        logger.debug("Total calories for date {}: {}", date, totalCalories);
         return "calorie_tracker";
     }
 
@@ -86,9 +92,9 @@ public class Calorie_TrackerController {
         String username = auth.getName();
         meal.setUsername(username);
         logger.debug("Adding meal for user: {} with details: {}", username, meal);
-        
+
         mealService.saveMeal(meal);
         logger.debug("Meal saved successfully: {}", meal);
-        return "redirect:/calorie_tracker";
+        return "redirect:/calorie_tracker?date=" + meal.getDate().toString();
     }
 }

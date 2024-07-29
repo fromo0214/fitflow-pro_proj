@@ -43,5 +43,8 @@ public class UserService {
         return Period.between(dob, LocalDate.now()).getYears();
     }
 
+    public double calculateWeightChange(double previousWeight, double newWeight){
+        return newWeight - previousWeight;
+    }
     
 }

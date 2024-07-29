@@ -54,6 +54,14 @@ public class CalorieService {
         }
     }  
 
+    public String calorieMessage(double currentWeight, double goalWeight){
+        if(currentWeight > goalWeight){
+            return "Caloric Deficit";
+        }else{
+            return "Caloric Surplus";
+        }
+    }
+
     public String getActivityCategory(double experienceLevel){
         if(experienceLevel < 1.375){
             return "Sedentary (little or no exercise)";

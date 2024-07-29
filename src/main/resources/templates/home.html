@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        .weight-gain {
+            color: green;
+        }
+        .weight-loss {
+            color: red;
+        }
+    </style>
     <link rel="icon" href="images/Flogo.png" type="images/png" />
     <link rel="stylesheet" href="css/home.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
@@ -24,8 +32,10 @@
         <div class="text-content">
             <h1 th:text="${username}">username</h1>
             <h2>Age: <span th:text="${age}">age</span></h2>
+            <h2>Starting Weight: <span th:text="${startWeight}">startWeight</span></h2>
             <h2>Current Weight: <span th:text="${currentWeight}">currentWeight</span></h2>
             <h2>Goal Weight: <span th:text="${goalWeight}">goalWeight</span></h2>
+            <h2>Weight Change: <span th:text="${weightChange}" th:classappend="${weightChange > 0 ? 'weight-gain' : (weightChange < 0 ? 'weight-loss' : '')}">weightChange</span></h2>
             <h2>Activity Level: <span th:text="${experienceLevel}">experienceLevel</span>(<span th:text="${activityCategory}">activityCategory</span>)</h2>
             <h2>Welcome to the Home Page!</h2>
             <h1>Features:</h1>

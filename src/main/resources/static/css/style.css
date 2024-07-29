@@ -279,5 +279,14 @@ h1{
     border-radius: 10px; /* optional rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* optional shadow */
   }
+
+  .profile-container {
+    margin-top: 20px; /* Adjust this value as needed */
+    width: 400px; /* or another suitable width */
+    padding: 20px; /* optional padding */
+    background: var(--text-color); /* optional background color */
+    border-radius: 10px; /* optional rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* optional shadow */
+  }
   
 

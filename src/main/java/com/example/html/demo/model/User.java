@@ -55,6 +55,9 @@ public class User {
     @Column(name = "profile_picture")
     private String profilePicture;
 
+    @Column(name = "weight_change")
+    private double weightChange;
+
     @OneToMany
     private List<Rating> ratedRoutines;
 
@@ -194,6 +197,14 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public double getWeightChange() {
+        return weightChange;
+    }
+
+    public void setWeightChange(double weightChange) {
+        this.weightChange = weightChange;
     }
 
     // public boolean isAccountNonExpired() {
