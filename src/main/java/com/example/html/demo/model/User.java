@@ -78,7 +78,7 @@ public class User {
     
 
       public User(String username, String email, String password, double height, double startWeight, double currentWeight,
-            double goalWeight, Double experienceLevel) {
+            double goalWeight, Double experienceLevel, String gender) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -87,6 +87,7 @@ public class User {
         this.currentWeight = currentWeight;
         this.goalWeight = goalWeight;
         this.experienceLevel = experienceLevel;
+        this.gender = gender;
     }
 
     public void rateWorkoutRoutine(WorkoutRoutine routine, double ratingValue) {

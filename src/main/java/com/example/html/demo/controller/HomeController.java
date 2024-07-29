@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.html.demo.model.User;
 import com.example.html.demo.repository.UserRepository;
+import com.example.html.demo.service.CalorieService;
 import com.example.html.demo.service.ImageService;
 import com.example.html.demo.service.UserService;
 
@@ -24,6 +25,9 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CalorieService calorieService;
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -61,6 +65,10 @@ public class HomeController {
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
             User user = userRepository.findByUsername(userDetails.getUsername());
 
+            double bmr = user.getExperienceLevel();
+
+            String activityCategory = calorieService.getActivityCategory(bmr);
+
             int age = userService.calculateAge(user.getDob());
 
             String randomImage = imageService.getRandomImage();
@@ -72,6 +80,7 @@ public class HomeController {
                 model.addAttribute("currentWeight", user.getCurrentWeight());
                 model.addAttribute("goalWeight", user.getGoalWeight());
                 model.addAttribute("experienceLevel", user.getExperienceLevel());
+                model.addAttribute("activityCategory", activityCategory);
                 model.addAttribute("randomImage", randomImage);
                 return "home";
             }

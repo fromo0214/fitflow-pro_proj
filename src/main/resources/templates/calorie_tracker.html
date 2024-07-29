@@ -37,8 +37,9 @@
             <button type="submit">Add Meal</button>
         </form>
         <div id="totalCalories">
-            <h1>Total Calories</h1>
-            <p id="total" th:text="${totalCalories}">0</p>
+            <h1>Calorie Overview</h1>
+            <p>Total Calories: <span id="total" th:text="${totalCalories}">0</span></p>
+            <p>Recommended Daily Intake: <span th:text="${formattedCalorieIntake}">0</span> (1 lb a week)</p>
         </div>
 
         <div id="mealList">
