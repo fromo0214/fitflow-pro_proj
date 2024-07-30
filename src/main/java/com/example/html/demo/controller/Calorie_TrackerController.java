@@ -57,21 +57,18 @@ public class Calorie_TrackerController {
         LocalDate nextDay = date.plusDays(1);
 
         int age = userService.calculateAge(user.getDob());
-
         double bmr = calorieService.calculateBMR(user.getCurrentWeight(), user.getHeight(), age, user.getGender());
-
         double tdee = calorieService.calculateTDEE(bmr, user.getExperienceLevel());
-
         double calorieIntake = calorieService.calculateCalorieIntake(user.getCurrentWeight(), user.getGoalWeight(), tdee);
-
         String formattedCalorieIntake = INTEGER_FORMAT.format(calorieIntake);
-
         String calorieMessage = calorieService.calorieMessage(user.getCurrentWeight(), user.getGoalWeight());
+
 
         List<Meal> meals = mealService.getMealsByDateAndUsername(date, username);
         Map<String, List<Meal>> groupedMeals = mealService.groupMealsByMealType(meals);
 
         int totalCalories = meals.stream().mapToInt(Meal::getCalories).sum();
+        String goalCalorieMessage = calorieService.calorieGoal(totalCalories, calorieIntake);
 
         model.addAttribute("meal", new Meal()); //adds the meal
         model.addAttribute("groupedMeals", groupedMeals); // displays list of meals grouped by type
@@ -81,6 +78,7 @@ public class Calorie_TrackerController {
         model.addAttribute("previousDay", previousDay.toString());
         model.addAttribute("nextDay", nextDay.toString());
         model.addAttribute("selectedDate", date);
+        model.addAttribute("goalCalorieMessage", goalCalorieMessage);
 
         logger.debug("Total calories for date {}: {}", date, totalCalories);
         return "calorie_tracker";

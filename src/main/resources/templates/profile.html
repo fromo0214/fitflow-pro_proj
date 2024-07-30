@@ -19,6 +19,8 @@
     <link rel="icon" href="images/Flogo.png" type="images/png" />
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <body onload="showMessages()">
 
@@ -85,10 +87,44 @@
         </div>
         <button type="submit" class="btn">Update Profile</button>
     </form>
-    <h2>Weight Change:</h2>
-    <p th:text="${weightChange}">0</p>
 </div>
-   
+<div>
+    <div id="weightChart" style="width: 900px; height: 500px;"></div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var dates = /*[[${dates}]]*/ [];
+    var weights = /*[[${weights}]]*/ [];
+    /*]]>*/
+
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Date');
+        data.addColumn('number', 'Weight(lbs)');
+
+        for (var i = 0; i < dates.length; i++) {
+            data.addRow([dates[i], weights[i]]);
+        }
+
+        var options = {
+            title: 'Weight Change Over Time',
+            hAxis: {
+                title: 'Date'
+            },
+            vAxis: {
+                title: 'Weight(lbs)'
+            }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('weightChart'));
+        chart.draw(data, options);
+    }
+</script>
+
 
 </body>
 </html>

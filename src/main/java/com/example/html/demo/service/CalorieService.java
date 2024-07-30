@@ -62,6 +62,13 @@ public class CalorieService {
         }
     }
 
+    public String calorieGoal(int totalCalories, double goalCalories){
+        if(totalCalories >= goalCalories){
+            return "Calorie goal hit good job!";
+        }
+        return "";
+    }
+
     public String getActivityCategory(double experienceLevel){
         if(experienceLevel < 1.375){
             return "Sedentary (little or no exercise)";

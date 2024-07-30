@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
     @Column(name = "username")
     private String username;
@@ -61,12 +62,9 @@ public class User {
     @OneToMany
     private List<Rating> ratedRoutines;
 
-
-    // private boolean accountNonExpired;
-    // private boolean accountNonLocked;
-    // private boolean credentialsNonExpired;
-    // private boolean enabled;
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<WeightChange> weightChanges;
+    
     public User(){
 
     }
@@ -107,7 +105,7 @@ public class User {
     
 
     public Long getUserId(){
-        return userId;
+        return id;
     }
 
     public String getUsername() {
@@ -173,14 +171,14 @@ public class User {
     
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", passwd=" + password
+        return "User [userId=" + id + ", username=" + username + ", email=" + email + ", passwd=" + password
                 + ", height=" + height + ", gender=" + gender + ", dob=" + dob + ", startingWeight=" + startWeight
                 + ", currentWeight=" + currentWeight + ", goalWeight=" + goalWeight + ", experienceLevel=" + experienceLevel
                 + "]";
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserId(Long id) {
+        this.id = id;
     }
 
     public List<Rating> getRatedRoutines() {
@@ -206,6 +204,14 @@ public class User {
     public void setWeightChange(double weightChange) {
         this.weightChange = weightChange;
     }
+
+    public List<WeightChange> getWeightChanges() {
+        return weightChanges;
+    }
+
+    // public void setWeightChanges(List<WeightChange> weightChanges) {
+    //     this.weightChanges = weightChanges;
+    // }
 
     // public boolean isAccountNonExpired() {
     //     return accountNonExpired;
