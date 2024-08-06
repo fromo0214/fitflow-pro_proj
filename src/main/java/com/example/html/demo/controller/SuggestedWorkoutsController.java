@@ -17,7 +17,6 @@ import com.example.html.demo.model.WorkoutRoutine;
 import com.example.html.demo.repository.UserRepository;
 import com.example.html.demo.service.RatingService;
 import com.example.html.demo.service.RecommendationService;
-import com.example.html.demo.service.UserService;
 import com.example.html.demo.service.WorkoutRoutineService;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -36,9 +35,6 @@ public class SuggestedWorkoutsController {
 
     @Autowired
     private RecommendationService recommendationService;
-
-    @Autowired
-    private UserService userService;
 
     @PostMapping("/suggested_workouts")
     public String postMethodName(@RequestParam Map<String, String> allRequestParams, Model model) {

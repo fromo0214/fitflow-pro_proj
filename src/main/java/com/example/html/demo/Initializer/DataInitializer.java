@@ -231,8 +231,6 @@ public class DataInitializer {
     }
 
      public void initializeWorkoutRoutines() {
-         // Get all workouts
-         List<Workout> workouts = workoutService.getAllWorkouts();
 
          //chest routine 1
          Workout chestWorkout1 = workoutRepository.findByWorkoutId(1L);

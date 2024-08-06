@@ -62,7 +62,6 @@ public class ProfileController {
 
     @PostMapping("/profile")
     public String updateProfile(@ModelAttribute User user) {
-        //TODO: process POST request
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User existingUser = userRepository.findByUsername(userDetails.getUsername());

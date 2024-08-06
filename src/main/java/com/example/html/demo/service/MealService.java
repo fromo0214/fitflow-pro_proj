@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.html.demo.model.Meal;
-import com.example.html.demo.model.Workout;
 import com.example.html.demo.repository.MealRepository;
 // 
 @Service

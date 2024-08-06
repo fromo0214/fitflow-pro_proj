@@ -5,15 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.html.demo.model.Workout;
 import com.example.html.demo.model.WorkoutRoutine;
 import com.example.html.demo.repository.WorkoutRoutineRepository;
 
 @Service
 public class WorkoutRoutineService {
 
-    @Autowired
-    private WorkoutService workoutService;
 
     @Autowired
     private WorkoutRoutineRepository workoutRoutineRepository;
