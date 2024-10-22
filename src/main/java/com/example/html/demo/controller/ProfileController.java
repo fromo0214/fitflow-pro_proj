@@ -47,7 +47,7 @@ public class ProfileController {
         User user = userRepository.findByUsername(username);
         model.addAttribute("user", user);
         Long id = user.getUserId();
-
+        
         List<WeightChange> weightChanges = weightChangeRepository.findByUser_Id(id);
         List<String> dates = weightChanges.stream().map(wc -> wc.getDate().toString()).collect(Collectors.toList());
         List<Double> weights = weightChanges.stream().map(WeightChange::getWeight).collect(Collectors.toList());
@@ -77,11 +77,18 @@ public class ProfileController {
             weightChangeRepository.save(weightChange2);
         }
 
-        user.setWeightChange(weightChange);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        //Only update the password if a new password was provided 
+        if(user.getPassword() != null && !user.getPassword().trim().isEmpty()){
+            // encrypt the new password and set it
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            existingUser.setPassword(encodedPassword);
 
-        return "redirect:/profile?username=" + user.getUsername();
+        }
+
+        existingUser.setWeightChange(weightChange);
+        userRepository.save(existingUser);
+
+        return "redirect:/profile?username=" + existingUser.getUsername();
     
         }
 }
