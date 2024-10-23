@@ -72,6 +72,7 @@ public class RegisterController {
 
         // not enabled until email verified
         user.setEnabled(false);
+        userService.saveUserDetails(user);
 
         // Generate verification token
         String token = UUID.randomUUID().toString();
