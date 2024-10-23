@@ -211,6 +211,7 @@ public class DataInitializer {
 
        public void initializeUsers(){
         User user1 = new User("test1", "hello1@gmail.com", passwordEncoder.encode("test"), 1.5);
+        user1.setEnabled(true);
         userService.saveUserDetails(user1);
 
         User user2 = new User("test2", "hello2@gmail.com", passwordEncoder.encode("test"), 1.6);
@@ -227,6 +228,7 @@ public class DataInitializer {
 
         User user6 = new User("fromo0214", "faromo0214@gmail.com", passwordEncoder.encode("test"), 72.0, 
         150.0, 188.0, 200.0, 1.9, "male");
+        user6.setEnabled(true);
         userService.saveUserDetails(user6);
     }
 
