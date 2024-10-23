@@ -42,18 +42,8 @@ public class RegisterController {
     
     @GetMapping("/register")
     public String register(Model model){
-        sendTestEmail();
         model.addAttribute("user", new User());
         return "register";
-    }
-
-    public void sendTestEmail() {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("faromo0214@gmail.com");
-        message.setSubject("Test Email");
-        message.setText("This is a test email from FitFlow Pro.");
-        message.setFrom("support@fitflowpro.pro");
-        mailSender.send(message);
     }
 
     @PostMapping("/register")
