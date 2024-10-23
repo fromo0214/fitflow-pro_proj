@@ -14,8 +14,6 @@ public class DemoApplication {
 	@Autowired
 	private DataInitializer dataInitializer;
 
-
-
 	public static void main(String[] args) {
 		
 		SpringApplication.run(DemoApplication.class, args);
@@ -23,7 +21,6 @@ public class DemoApplication {
 
 	@PostConstruct
 	public void initialize(){
-		dataInitializer.sendTestEmail();
 		dataInitializer.initializeUsers();
 		dataInitializer.initializeWorkout();
 		dataInitializer.initializeWorkoutRoutines();;

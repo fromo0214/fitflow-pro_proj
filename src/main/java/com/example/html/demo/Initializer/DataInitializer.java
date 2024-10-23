@@ -458,13 +458,5 @@ public class DataInitializer {
         mealService.saveMeal(meal1);
     }
 
-    public void sendTestEmail() {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("faromo0214@gmail.com");
-        message.setSubject("Test Email");
-        message.setText("This is a test email from FitFlow Pro.");
-        message.setFrom("support@fitflowpro.pro");
 
-        mailSender.send(message);
-    }
 }
