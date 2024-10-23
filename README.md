@@ -36,3 +36,8 @@ Thymeleaf: Templating engine for rendering HTML pages
 Maven
 
 PostgreSQL Database
+
+**Future Enhancements
+**Implementing email verification upon registration.
+Adding password recovery functionality.
+Support for OAuth2 login (e.g., Google, Facebook).
