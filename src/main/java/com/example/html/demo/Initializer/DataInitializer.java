@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,10 @@ import com.example.html.demo.service.WorkoutRoutineService;
 
 @Component
 public class DataInitializer {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
     @Autowired
     private WorkoutService workoutService;
 
@@ -42,6 +48,7 @@ public class DataInitializer {
 
     @Autowired
     private WorkoutRepository workoutRepository;
+
 
     @Autowired
     private RatingService ratingService;
@@ -449,5 +456,15 @@ public class DataInitializer {
         LocalDate date = LocalDate.now();
         Meal meal1 = new Meal("hamburger", 800, "Breakfast", date, "fromo0214");
         mealService.saveMeal(meal1);
+    }
+
+    public void sendTestEmail() {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("faromo0214@gmail.com");
+        message.setSubject("Test Email");
+        message.setText("This is a test email from FitFlow Pro.");
+        message.setFrom("support@fitflowpro.pro");
+
+        mailSender.send(message);
     }
 }
