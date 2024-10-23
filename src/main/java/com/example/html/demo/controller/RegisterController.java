@@ -84,18 +84,18 @@ public class RegisterController {
         // Send verification email
         sendVerificationEmail(user.getEmail(), token);
 
-        // Save user to the db
-        userService.saveUserDetails(user);
+        // // Save user to the db
+        // userService.saveUserDetails(user);
 
         // Authenticate the user upon registering
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), rawPassword);
-        try {
-            SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authToken));
-            System.out.println("Authentication successful for user: " + user.getUsername());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Authentication failed for user: " + user.getUsername());
-        }
+        // UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), rawPassword);
+        // try {
+        //     SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authToken));
+        //     System.out.println("Authentication successful for user: " + user.getUsername());
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        //     System.out.println("Authentication failed for user: " + user.getUsername());
+        // }
 
 
         return "redirect:/login?registered=true";
