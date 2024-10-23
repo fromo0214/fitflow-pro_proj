@@ -38,7 +38,7 @@
     </header>
 
     <div class="profile-container">
-    <h1>Profile Information</h1> 
+    <h1 style="padding-top: 10px;">Profile Information</h1> 
     <form th:action="@{/profile}" th:object="${user}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{userId}" />
         <input type="hidden" th:field="*{username}" />

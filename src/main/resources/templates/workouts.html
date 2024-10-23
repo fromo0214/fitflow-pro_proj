@@ -21,8 +21,8 @@
         </form>
         </nav>
       </header>
-
-    <h1>All Workouts (Sorted by Muscle Group)</h1>
+    
+    <h1 style="padding-top: 40px;">All Workouts (Sorted by Muscle Group)</h1>
     <div th:each="entry : ${groupedWorkouts}">
         <h2 th:text="${entry.key}"></h2>
         <table>

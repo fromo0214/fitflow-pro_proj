@@ -34,7 +34,7 @@
                 </span>
                   <input type="text" required name="username">
                   <label for="username">Username</label>
-                  <span th:if="${usernameError}" th:text="${usernameError}"></span>
+                  <span th:if="${usernameError}" th:text="${usernameError}" style="color: red;"></span>
               </div>
               <div class="input-box">
                 <span class="icon">
@@ -42,7 +42,7 @@
                 </span>
                   <input type="email" required name="email">
                   <label for="email">Email</label>
-                  <span th:if="${emailError}" th:text="${emailError}"></span>
+                  <span th:if="${emailError}" th:text="${emailError}" style="color: red;"></span>
               </div>
               <div class="input-box">
                 <span class="icon">

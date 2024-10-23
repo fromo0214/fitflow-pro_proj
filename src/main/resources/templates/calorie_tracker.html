@@ -23,7 +23,7 @@
     </header>
 
     <div class="container">
-        <h1>Calorie Tracker</h1>
+        <h1 style="padding-top: 20px;">Calorie Tracker</h1>
         <form id="calorieForm" th:action="@{/addMeal}" th:object="${meal}" method="post">
             <label for="meal">Meal:</label>
             <input type="text" id="mealName" th:field="*{mealName}" name="mealName" required>

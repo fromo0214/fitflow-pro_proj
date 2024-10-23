@@ -35,16 +35,23 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, Model model) {
-
-        if(userService.isUsernameTaken(user.getUsername())){
+        // Check if username is already taken
+        boolean usernameTaken = userService.isUsernameTaken(user.getUsername());
+        if (usernameTaken){
             model.addAttribute("usernameError", "Username is already taken.");
         }
 
-        if(userService.isEmailTaken(user.getEmail())){
-            model.addAttribute("emailError", "Email is already registered.");
+        // Check if email is already registered
+        boolean emailTaken = userService.isEmailTaken(user.getEmail());
+        if (emailTaken){
+            model.addAttribute("emailError", "Email is already taken.");
+        }
+        
+        // If any of these conditions are true then return to register page with errors.
+        if (emailTaken || usernameTaken){
+            return "register";
         }
 
-        System.out.println(user.toString());
 
         String rawPassword = user.getPassword();
         // Encoding password before saving the user to db
