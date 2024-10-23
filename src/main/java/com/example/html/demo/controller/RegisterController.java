@@ -1,6 +1,8 @@
 package com.example.html.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,7 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.html.demo.model.User;
+import com.example.html.demo.model.VerificationToken;
+import com.example.html.demo.repository.VerificationTokenRepository;
 import com.example.html.demo.service.UserService;
+
+import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Controller
 public class RegisterController {
@@ -24,7 +31,13 @@ public class RegisterController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
 
     
     @GetMapping("/register")
@@ -57,6 +70,20 @@ public class RegisterController {
         // Encoding password before saving the user to db
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        // not enabled until email verified
+        user.setEnabled(false);
+
+        // Generate verification token
+        String token = UUID.randomUUID().toString();
+        VerificationToken verificationToken = new VerificationToken();
+        verificationToken.setToken(token);
+        verificationToken.setUser(user);
+        verificationToken.setExpiryDate(LocalDateTime.now().plusHours(24)); //token expires in 24 hours
+        tokenRepository.save(verificationToken);
+
+        // Send verification email
+        sendVerificationEmail(user.getEmail(), token);
+
         // Save user to the db
         userService.saveUserDetails(user);
 
@@ -70,10 +97,23 @@ public class RegisterController {
             System.out.println("Authentication failed for user: " + user.getUsername());
         }
 
-        System.out.println("Current user: " + SecurityContextHolder.getContext().getAuthentication().getName());
-
 
         return "redirect:/login?registered=true";
+    }
+
+    private void sendVerificationEmail(String recipientEmail, String token) {
+
+        String subject = "Email Verification - FitFlow Pro";
+        String confirmationURL = "http://www.fitflowpro.pro/verify?token=" + token;
+        String message = "Please click the link below to verify your account: \n" + confirmationURL;
+
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(recipientEmail);
+        email.setSubject(subject);
+        email.setText(message);
+        email.setFrom("support@fitflowpro.pro");
+
+        mailSender.send(email);
     }
 }
 

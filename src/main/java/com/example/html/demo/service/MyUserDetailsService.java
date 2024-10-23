@@ -24,6 +24,11 @@ public class MyUserDetailsService implements UserDetailsService{
         if(user == null){
             throw new UsernameNotFoundException("User not found!");
         }
+
+        if(!user.isEnabled()){
+            throw new UsernameNotFoundException("Account is not verified please check your email for verification.");
+        }
+        // If user is enabled, return their details
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
 

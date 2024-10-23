@@ -64,6 +64,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<WeightChange> weightChanges;
+
+    private boolean enabled = false;
     
     public User(){
 
@@ -207,6 +209,26 @@ public class User {
 
     public List<WeightChange> getWeightChanges() {
         return weightChanges;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setWeightChanges(List<WeightChange> weightChanges) {
+        this.weightChanges = weightChanges;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     // public void setWeightChanges(List<WeightChange> weightChanges) {
