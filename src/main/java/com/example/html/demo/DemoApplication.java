@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.html.demo.Initializer.DataInitializer;
+import com.example.html.demo.service.TestEmailService;
 
 import jakarta.annotation.PostConstruct;
 
@@ -13,6 +14,10 @@ public class DemoApplication {
 
 	@Autowired
 	private DataInitializer dataInitializer;
+
+	@Autowired
+	private TestEmailService emailService;
+
 	public static void main(String[] args) {
 		
 		SpringApplication.run(DemoApplication.class, args);
@@ -20,6 +25,7 @@ public class DemoApplication {
 
 	@PostConstruct
 	public void initialize(){
+		emailService.sendTestEmail();
 		dataInitializer.initializeUsers();
 		dataInitializer.initializeWorkout();
 		dataInitializer.initializeWorkoutRoutines();;
