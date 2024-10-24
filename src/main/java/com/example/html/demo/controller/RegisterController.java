@@ -85,7 +85,7 @@ public class RegisterController {
         // Send verification email
         sendVerificationEmail(user.getEmail(), token);
 
-        // // Save user to the db
+        // Save user to the db
         // userService.saveUserDetails(user);
 
         // Authenticate the user upon registering
@@ -112,7 +112,7 @@ public class RegisterController {
         email.setTo(recipientEmail);
         email.setSubject(subject);
         email.setText(message);
-        email.setFrom("support@fitflowpro.pro");
+        email.setFrom("faromo0214@gmail.com");
 
         mailSender.send(email);
     }
