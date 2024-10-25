@@ -9,7 +9,14 @@
 <body>
 
     <header>
-        <h1>FitFlow Pro</h1>
+        <h2 class="logo">
+            <img src="images/Flogo.png" alt="FitFlow Logo" style="height: 80px; vertical-align: middle;">
+            FitFlow Pro
+        </h2>
+        <nav class="navigation">
+            <a th:href="@{/home}">Home</a>  
+            <button class="btnLogin-popup" th:href="@{/login}">Login</button>
+        </nav>
     </header>
 
     <div class="container">
@@ -17,7 +24,7 @@
         <div th:if="${verificationSuccess}">
             <h2>Your account has been successfully verified!</h2>
             <p>You can now log in using your account.</p>
-            <a href="/login" class="btn">Go to Login</a>
+            <a th:href="@{/login}" class="btn">Go to Login</a>
         </div>
 
         <!-- Display failure message -->
