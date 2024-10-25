@@ -42,7 +42,7 @@ public class VerificationController {
         userService.saveUserDetails(user);
 
         model.addAttribute("verificationSuccess", true);
-        return "redirect:/login?emailSuccessfullyVerified";
+        return "verify";
     }
     
 
