@@ -99,7 +99,7 @@ public class RegisterController {
         // }
 
 
-        return "redirect:/verify";
+        return "redirect:/login?emailSent";
     }
 
     private void sendVerificationEmail(String recipientEmail, String token) {
