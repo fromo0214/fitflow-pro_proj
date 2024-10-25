@@ -112,7 +112,7 @@ public class RegisterController {
         email.setTo(recipientEmail);
         email.setSubject(subject);
         email.setText(message);
-        email.setFrom("fromo301@yahoo.com");
+        email.setFrom("support@fitflowpro.pro");
 
         mailSender.send(email);
     }
