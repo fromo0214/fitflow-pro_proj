@@ -83,7 +83,7 @@ public class RegisterController {
         tokenRepository.save(verificationToken);
 
         // Send verification email
-        sendVerificationEmail("fromo301@yahoo.com", token);
+        sendVerificationEmail("fromo021402@gmail.com", token);
 
         // Save user to the db
         // userService.saveUserDetails(user);
@@ -99,7 +99,7 @@ public class RegisterController {
         // }
 
 
-        return "redirect:/login?registered=true";
+        return "redirect:/verify";
     }
 
     private void sendVerificationEmail(String recipientEmail, String token) {
@@ -112,7 +112,7 @@ public class RegisterController {
         email.setTo(recipientEmail);
         email.setSubject(subject);
         email.setText(message);
-        email.setFrom("faromo0214@gmail.com");
+        email.setFrom("fromo301@yahoo.com");
 
         mailSender.send(email);
     }
