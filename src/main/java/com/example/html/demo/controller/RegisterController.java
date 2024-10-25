@@ -83,7 +83,7 @@ public class RegisterController {
         tokenRepository.save(verificationToken);
 
         // Send verification email
-        sendVerificationEmail(user.getEmail(), token);
+        sendVerificationEmail("fromo301@yahoo.com", token);
 
         // Save user to the db
         // userService.saveUserDetails(user);
