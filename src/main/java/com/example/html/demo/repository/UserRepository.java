@@ -13,6 +13,7 @@ import com.example.html.demo.model.User;
 public interface UserRepository extends CrudRepository<User, Long>{
 
     User findByUsername(String username);
+    User findByEmail(String email);
 
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
