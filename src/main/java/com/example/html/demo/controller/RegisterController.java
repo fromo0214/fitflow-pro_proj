@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +30,6 @@ public class RegisterController {
 
     @Autowired
     private JavaMailSender mailSender;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     private VerificationTokenRepository tokenRepository;

@@ -65,30 +65,40 @@ public class ProfileController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User existingUser = userRepository.findByUsername(userDetails.getUsername());
+    
+        // Update fields from the user input to existingUser
+        existingUser.setEmail(user.getEmail());
+        existingUser.setHeight(user.getHeight());
+        existingUser.setGender(user.getGender());
+        existingUser.setDob(user.getDob());
+        existingUser.setStartWeight(user.getStartWeight());
+        existingUser.setCurrentWeight(user.getCurrentWeight());
+        existingUser.setGoalWeight(user.getGoalWeight());
+        existingUser.setExperienceLevel(user.getExperienceLevel());
+    
+        // Calculate and save weight change if necessary
         double previousWeight = existingUser.getCurrentWeight();
         double currentWeight = user.getCurrentWeight();
-        double weightChange = userService.calculateWeightChange(existingUser.getCurrentWeight(), user.getCurrentWeight());
-
-        if(previousWeight != currentWeight){
-            WeightChange weightChange2 = new WeightChange(); 
-            weightChange2.setWeight(currentWeight);
-            weightChange2.setDate(LocalDate.now());
-            weightChange2.setUser(existingUser);
-            weightChangeRepository.save(weightChange2);
+        if (previousWeight != currentWeight) {
+            double weightChange = userService.calculateWeightChange(previousWeight, currentWeight);
+            WeightChange weightChangeRecord = new WeightChange();
+            weightChangeRecord.setWeight(currentWeight);
+            weightChangeRecord.setDate(LocalDate.now());
+            weightChangeRecord.setUser(existingUser);
+            weightChangeRepository.save(weightChangeRecord);
+            existingUser.setWeightChange(weightChange);
         }
-
-        //Only update the password if a new password was provided 
-        if(user.getPassword() != null && !user.getPassword().trim().isEmpty()){
-            // encrypt the new password and set it
+    
+        // Update password if a new password was provided
+        if (user.getPassword() != null && !user.getPassword().trim().isEmpty()) {
             String encodedPassword = passwordEncoder.encode(user.getPassword());
             existingUser.setPassword(encodedPassword);
-
         }
-
-        existingUser.setWeightChange(weightChange);
-        userRepository.save(existingUser);
-
-        return "redirect:/profile?username=" + existingUser.getUsername();
     
-        }
+        // Save the updated user details
+        userRepository.save(existingUser);
+    
+        return "redirect:/profile?username=" + existingUser.getUsername();
+    }
+    
 }
