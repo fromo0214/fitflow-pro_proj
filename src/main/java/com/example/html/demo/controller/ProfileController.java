@@ -78,9 +78,9 @@ public String updateProfile(@ModelAttribute User user) {
     // Calculate weight change before updating the current weight
     double previousWeight = existingUser.getCurrentWeight();
     double currentWeight = user.getCurrentWeight();
+    double weightChange = userService.calculateWeightChange(existingUser.getCurrentWeight(), user.getCurrentWeight());
     
     if (previousWeight != currentWeight) {
-        double weightChange = userService.calculateWeightChange(previousWeight, currentWeight);
         
         // Save the weight change record
         WeightChange weightChangeRecord = new WeightChange();
@@ -100,6 +100,7 @@ public String updateProfile(@ModelAttribute User user) {
         existingUser.setPassword(encodedPassword);
     }
 
+    user.setWeightChange(weightChange);
     // Save the updated user details
     userRepository.save(existingUser);
 
