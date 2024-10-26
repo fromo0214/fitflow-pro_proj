@@ -61,45 +61,50 @@ public class ProfileController {
     
 
     @PostMapping("/profile")
-    public String updateProfile(@ModelAttribute User user) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        User existingUser = userRepository.findByUsername(userDetails.getUsername());
+public String updateProfile(@ModelAttribute User user) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails userDetails = (UserDetails) auth.getPrincipal();
+    User existingUser = userRepository.findByUsername(userDetails.getUsername());
+
+    // Update fields from the user input to existingUser
+    existingUser.setEmail(user.getEmail());
+    existingUser.setHeight(user.getHeight());
+    existingUser.setGender(user.getGender());
+    existingUser.setDob(user.getDob());
+    existingUser.setStartWeight(user.getStartWeight());
+    existingUser.setGoalWeight(user.getGoalWeight());
+    existingUser.setExperienceLevel(user.getExperienceLevel());
+
+    // Calculate weight change before updating the current weight
+    double previousWeight = existingUser.getCurrentWeight();
+    double currentWeight = user.getCurrentWeight();
     
-        // Update fields from the user input to existingUser
-        existingUser.setEmail(user.getEmail());
-        existingUser.setHeight(user.getHeight());
-        existingUser.setGender(user.getGender());
-        existingUser.setDob(user.getDob());
-        existingUser.setStartWeight(user.getStartWeight());
-        existingUser.setCurrentWeight(user.getCurrentWeight());
-        existingUser.setGoalWeight(user.getGoalWeight());
-        existingUser.setExperienceLevel(user.getExperienceLevel());
-    
-        // Calculate and save weight change if necessary
-        double previousWeight = existingUser.getCurrentWeight();
-        double currentWeight = user.getCurrentWeight();
+    if (previousWeight != currentWeight) {
         double weightChange = userService.calculateWeightChange(previousWeight, currentWeight);
+        
+        // Save the weight change record
+        WeightChange weightChangeRecord = new WeightChange();
+        weightChangeRecord.setWeight(currentWeight);
+        weightChangeRecord.setDate(LocalDate.now());
+        weightChangeRecord.setUser(existingUser);
+        weightChangeRepository.save(weightChangeRecord);
 
-        if (previousWeight != currentWeight) {
-            WeightChange weightChangeRecord = new WeightChange();
-            weightChangeRecord.setWeight(currentWeight);
-            weightChangeRecord.setDate(LocalDate.now());
-            weightChangeRecord.setUser(existingUser);
-            weightChangeRepository.save(weightChangeRecord);
-        }
-    
-        // Update password if a new password was provided
-        if (user.getPassword() != null && !user.getPassword().trim().isEmpty()) {
-            String encodedPassword = passwordEncoder.encode(user.getPassword());
-            existingUser.setPassword(encodedPassword);
-        }
-
+        // Update the weightChange field for existingUser
         existingUser.setWeightChange(weightChange);
-        // Save the up  dated user details
-        userRepository.save(existingUser);
-    
-        return "redirect:/profile?username=" + existingUser.getUsername();
+        existingUser.setCurrentWeight(currentWeight);  // Update current weight in existingUser
     }
+
+    // Update password if a new password was provided
+    if (user.getPassword() != null && !user.getPassword().trim().isEmpty()) {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        existingUser.setPassword(encodedPassword);
+    }
+
+    // Save the updated user details
+    userRepository.save(existingUser);
+
+    return "redirect:/profile?username=" + existingUser.getUsername();
+}
+
     
 }
