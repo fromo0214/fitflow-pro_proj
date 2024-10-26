@@ -221,17 +221,17 @@ public class DataInitializer {
         user1.setEnabled(true);
         userService.saveUserDetails(user1);
 
-        User user2 = new User("test2", "hello2@gmail.com", passwordEncoder.encode("test"), 1.6);
-        userService.saveUserDetails(user2);
+        // User user2 = new User("test2", "hello2@gmail.com", passwordEncoder.encode("test"), 1.6);
+        // userService.saveUserDetails(user2);
 
-        User user3 = new User("test3", "hello3@gmail.com", passwordEncoder.encode("test"), 1.4);
-        userService.saveUserDetails(user3);
+        // User user3 = new User("test3", "hello3@gmail.com", passwordEncoder.encode("test"), 1.4);
+        // userService.saveUserDetails(user3);
 
-        User user4 = new User("test4", "hello4@gmail.com", passwordEncoder.encode("test"), 1.8);
-        userService.saveUserDetails(user4);
+        // User user4 = new User("test4", "hello4@gmail.com", passwordEncoder.encode("test"), 1.8);
+        // userService.saveUserDetails(user4);
 
-        User user5 = new User("test5", "hello5@gmail.com", passwordEncoder.encode("test"), 1.2);
-        userService.saveUserDetails(user5);
+        // User user5 = new User("test5", "hello5@gmail.com", passwordEncoder.encode("test"), 1.2);
+        // userService.saveUserDetails(user5);
 
         User user6 = new User("fromo0214", "hello6@gmail.com", passwordEncoder.encode("test"), 72.0, 
         150.0, 188.0, 200.0, 1.9, "male");
