@@ -29,7 +29,11 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
         .authorizeHttpRequests((requests) -> requests
-            .requestMatchers("/verify", "/login", "/register","/css/**", "/js/**", "/images/**", "/h2/**", "/home").permitAll() // Allow public access to registration and static resources
+            .requestMatchers
+            (
+                "/verify", "/login", "/register","/css/**"
+                , "/js/**", "/images/**", "/reset_password"
+                , "/h2/**", "/home","/forgot_password").permitAll() // Allow public access to registration and static resources
             .anyRequest().authenticated()                                               //allows users without accounts to access the /register url
         )                                                                               // and css/js resources from the template, .permitall() allows access to urls without
                                                                                         // authentication
