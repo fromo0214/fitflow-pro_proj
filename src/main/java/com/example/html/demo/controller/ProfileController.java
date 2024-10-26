@@ -79,14 +79,14 @@ public class ProfileController {
         // Calculate and save weight change if necessary
         double previousWeight = existingUser.getCurrentWeight();
         double currentWeight = user.getCurrentWeight();
+        double weightChange = userService.calculateWeightChange(previousWeight, currentWeight);
+
         if (previousWeight != currentWeight) {
-            double weightChange = userService.calculateWeightChange(previousWeight, currentWeight);
             WeightChange weightChangeRecord = new WeightChange();
             weightChangeRecord.setWeight(currentWeight);
             weightChangeRecord.setDate(LocalDate.now());
             weightChangeRecord.setUser(existingUser);
             weightChangeRepository.save(weightChangeRecord);
-            existingUser.setWeightChange(weightChange);
         }
     
         // Update password if a new password was provided
@@ -94,8 +94,9 @@ public class ProfileController {
             String encodedPassword = passwordEncoder.encode(user.getPassword());
             existingUser.setPassword(encodedPassword);
         }
-    
-        // Save the updated user details
+
+        existingUser.setWeightChange(weightChange);
+        // Save the up  dated user details
         userRepository.save(existingUser);
     
         return "redirect:/profile?username=" + existingUser.getUsername();
