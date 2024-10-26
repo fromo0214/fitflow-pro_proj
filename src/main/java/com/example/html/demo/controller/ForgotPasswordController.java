@@ -29,7 +29,7 @@ public class ForgotPasswordController {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @GetMapping("/forgot_password")
     public String getMethodName() {
         return "forgot_password";
@@ -43,6 +43,7 @@ public class ForgotPasswordController {
         //check to see if user exists 
         if(user == null){
             model.addAttribute("emailError", "No account found with that email address.");
+            return "forgot_password";
         }
 
         //generates a reset token
