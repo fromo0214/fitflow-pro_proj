@@ -29,6 +29,12 @@ public class ForgotPasswordController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @GetMapping("/forgot_password")
+    public String getMethodName() {
+        return "forgot_password";
+    }
+    
 
     @PostMapping("/forgot_password")
     public String forgotPassword(Model model, @RequestParam("email")String email){
