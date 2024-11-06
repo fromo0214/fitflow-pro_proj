@@ -13,17 +13,16 @@ import com.example.html.demo.repository.ResetPasswordTokenRepository;
 import com.example.html.demo.repository.UserRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 public class ResetPasswordController {
+
     @Autowired
     private ResetPasswordTokenRepository tokenRepository;
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -50,7 +49,7 @@ public class ResetPasswordController {
     @PostMapping("/reset_password")
     public String postMethodName(@RequestParam("password")String password, Model model, @RequestParam("token")
     String token ) {
-        //TODO: process POST request
+
         ResetPasswordToken passwordToken = tokenRepository.findByToken(token);
 
         if(passwordToken == null || passwordToken.isExpired()){
@@ -63,8 +62,8 @@ public class ResetPasswordController {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
         
-        //delete token after successful password reset
-        tokenRepository.delete(passwordToken);
+        // //delete token after successful password reset
+        // tokenRepository.delete(passwordToken);
 
         return "redirect:/login?passwordUpdatedSuccessfully";
     }
