@@ -62,9 +62,9 @@ public class ResetPasswordController {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
         
-        // //delete token after successful password reset
-        // tokenRepository.delete(passwordToken);
-
+        //delete token after successful password reset
+        tokenRepository.delete(passwordToken);
+        
         return "redirect:/login?passwordUpdatedSuccessfully";
     }
     
