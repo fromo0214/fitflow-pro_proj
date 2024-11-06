@@ -2,8 +2,9 @@
 
 **Link:** www.fitflowpro.pro
 
-**Description:
-**FitFlow Pro is a Spring Boot web application designed to manage user authentication, registration, and login/logout functionality. It is built using Java, 
+**Description:**
+
+FitFlow Pro is a Spring Boot web application designed to manage user authentication, registration, and login/logout functionality. It is built using Java, 
 Spring Boot, Thymeleaf for templating, and Spring Security for authentication. The application allows users to register, log in, access protected resources, 
 and log out securely.
 
