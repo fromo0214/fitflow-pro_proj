@@ -107,7 +107,7 @@
     function drawChart() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Date');
-        data.addColumn('number', 'Weight');
+        data.addColumn('number', 'Weight ');
 
         for (var i = 0; i < dates.length; i++) {
             data.addRow([dates[i], weights[i]]);
