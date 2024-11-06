@@ -23,6 +23,10 @@ Session Management: Uses Spring Security to manage user sessions and secure page
 
 Thymeleaf Templating: Displays dynamic data like logged-in usernames on the home page.
 
+Email Verification: Verification link sent to email upon registering to enable new accounts.
+
+Password Reset: Reset password link sent to email upon requesting to reset.
+
 **Technologies Used:**
 
 Java 17: Core programming language
@@ -37,7 +41,6 @@ Maven
 
 PostgreSQL Database
 
-**Future Enhancements
-**Implementing email verification upon registration.
-Adding password recovery functionality.
+**Future Enhancements**
+
 Support for OAuth2 login (e.g., Google, Facebook).
