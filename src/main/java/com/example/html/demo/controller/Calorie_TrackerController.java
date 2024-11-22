@@ -46,34 +46,47 @@ public class Calorie_TrackerController {
 
     @GetMapping("/calorie_tracker")
     public String calorieTracker(@RequestParam(value = "date", required = false) String dateStr, Model model) {
+        //getting active user details 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String username = userDetails.getUsername();
-
         User user = userRepository.findByUsername(username);
 
+        //getting the dates for the calorie tracker 
         LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr) : LocalDate.now();
         LocalDate previousDay = date.minusDays(1);
         LocalDate nextDay = date.plusDays(1);
 
+        //calculating BMR from user details
         int age = userService.calculateAge(user.getDob());
         double bmr = calorieService.calculateBMR(user.getCurrentWeight(), user.getHeight(), age, user.getGender());
         double tdee = calorieService.calculateTDEE(bmr, user.getExperienceLevel());
-        double calorieIntake = calorieService.calculateCalorieIntake(user.getCurrentWeight(), user.getGoalWeight(), tdee);
-        String formattedCalorieIntake = INTEGER_FORMAT.format(calorieIntake);
+
+        //calculating calorie goal to gain/lose weight for user
+        double calorieIntake1LB = calorieService.calculateCalorieIntake1LB(user.getCurrentWeight(), user.getGoalWeight(), tdee);
+        String formattedCalorieIntake1LB = INTEGER_FORMAT.format(calorieIntake1LB);
+
+        //to maintain current weight the calorie goal is just the calculate tdee
+        double calorieIntakeMaintainWeight = tdee;
+        String formattedCalorieIntakeMaintainWeight = INTEGER_FORMAT.format(calorieIntakeMaintainWeight);
+
+        //"Caloric Surplus" or "Caloric Deficit"
         String calorieMessage = calorieService.calorieMessage(user.getCurrentWeight(), user.getGoalWeight());
 
-
+        //displays all the added meals to tracker
         List<Meal> meals = mealService.getMealsByDateAndUsername(date, username);
         Map<String, List<Meal>> groupedMeals = mealService.groupMealsByMealType(meals);
 
+        //calculates the total calories from meals across the day
         int totalCalories = meals.stream().mapToInt(Meal::getCalories).sum();
-        String goalCalorieMessage = calorieService.calorieGoal(totalCalories, calorieIntake);
+        String goalCalorieMessage = calorieService.calorieGoal(totalCalories, calorieIntake1LB);
 
         model.addAttribute("meal", new Meal()); //adds the meal
         model.addAttribute("groupedMeals", groupedMeals); // displays list of meals grouped by type
         model.addAttribute("totalCalories", totalCalories); //displays total calories
-        model.addAttribute("formattedCalorieIntake", formattedCalorieIntake); //displays calorie intake
+        model.addAttribute("formattedCalorieIntake1LB", formattedCalorieIntake1LB); //displays calorie intake for 1 LB
+        model.addAttribute("formattedCalorieIntakeMaintainWeight", 
+        formattedCalorieIntakeMaintainWeight); //displays calorie intake for maintaining weight
         model.addAttribute("calorieMessage", calorieMessage);
         model.addAttribute("previousDay", previousDay.toString());
         model.addAttribute("nextDay", nextDay.toString());

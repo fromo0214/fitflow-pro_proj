@@ -39,8 +39,13 @@ public class CalorieService {
     public double calculateTDEE(double bmr, double experienceLevel){
         return bmr * experienceLevel;
     }
+
+    public double calculateCalorieIntakeMaintainWeight(double tdee){ 
+        //For maintaining weight, calorie intake is equal to the TDEE
+        return tdee;
+    }
     
-    public double calculateCalorieIntake(double currentWeight, double goalWeight, double tdee){
+    public double calculateCalorieIntake1LB(double currentWeight, double goalWeight, double tdee){
         if(goalWeight < currentWeight){
             //to lose weight
             return tdee-500;
